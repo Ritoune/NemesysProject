@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bloggy.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210512154505_AuthorAlias")]
-    partial class AuthorAlias
+    [Migration("20210606113502_cinq")]
+    partial class cinq
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -108,13 +108,13 @@ namespace Bloggy.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ReadCount")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TypeOfHazard")

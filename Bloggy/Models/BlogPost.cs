@@ -11,6 +11,8 @@ namespace Bloggy.Models
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public string Location { get; set; }
+        public string TypeOfHazard { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
         public string ImageUrl { get; set; }
@@ -25,6 +27,8 @@ namespace Bloggy.Models
         public string UserId { get; set; }
         //Reference navigation property
         public ApplicationUser User { get; set; }
+
+        
 
 
     }

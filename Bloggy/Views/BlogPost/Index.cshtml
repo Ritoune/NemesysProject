@@ -15,7 +15,7 @@
             <img class="card-img-top" src="@blogPost.ImageUrl" alt="Image for @blogPost.Title" />
             <div class="card-body">
                 <h3 class="card-title">@blogPost.Title</h3>
-                <p class="small">@blogPost.CreatedDate.ToShortDateString() in @blogPost.Category.Name by @blogPost.Author.Name</p>
+                <p class="small">@blogPost.CreatedDate.ToShortDateString() in @blogPost.Category.Name Location : @blogPost.Location Type Of Hazard : @blogPost.TypeOfHazard by @blogPost.Author.Name</p>
                 <a asp-controller="BlogPost" asp-action="Details" asp-route-id="@blogPost.Id" class="btn btn-primary">Details</a>
             </div>
         </div>
