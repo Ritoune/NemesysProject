@@ -53,7 +53,10 @@ namespace Bloggy.Models.Repositories
                     Content = "Today's AGA is characterized by a series of discussions and debates around ...",
                     CreatedDate = DateTime.UtcNow,
                     ImageUrl = "/images/seed1.jpg",
-                    CategoryId = 1
+                    CategoryId = 1,
+                    Location = "parking",
+                    TypeOfHazard = "Equipment"
+
                 },
                 new BlogPost()
                 {
@@ -62,7 +65,9 @@ namespace Bloggy.Models.Repositories
                     Content = "Today's traffic can't be described using words. Only an image can do that ...",
                     CreatedDate = DateTime.UtcNow.AddDays(-1),
                     ImageUrl = "/images/seed2.jpg",
-                    CategoryId = 2
+                    CategoryId = 2,
+                    Location = "At the entrance",
+                    TypeOfHazard = "Structure"
                 },
                 new BlogPost()
                 {
@@ -71,7 +76,9 @@ namespace Bloggy.Models.Repositories
                     Content = "Clouds clouds all around us. I thought spring started already, but ...",
                     CreatedDate = DateTime.UtcNow.AddDays(-2),
                     ImageUrl = "/images/seed3.jpg",
-                    CategoryId = 2
+                    CategoryId = 2,
+                    Location = "In the library",
+                    TypeOfHazard = "Unsafe Act"
                 }
             };
         }
@@ -113,6 +120,8 @@ namespace Bloggy.Models.Repositories
                 existingBlogPost.UpdatedDate = blogPost.UpdatedDate;
                 existingBlogPost.CategoryId = blogPost.CategoryId;
                 existingBlogPost.UserId = blogPost.UserId;
+                existingBlogPost.Location = blogPost.Location;
+                existingBlogPost.TypeOfHazard = blogPost.TypeOfHazard;
             }
         }
 

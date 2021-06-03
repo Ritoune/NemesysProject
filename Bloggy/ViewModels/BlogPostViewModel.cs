@@ -14,6 +14,8 @@ namespace Bloggy.ViewModels
         public string ImageUrl { get; set; }
         public int ReadCount { get; set; }
         public CategoryViewModel Category { get; set; }
+        public string Location { get; set; }
+        public string TypeOfHazard { get; set; }
         public AuthorViewModel Author { get; set; }
     }
 

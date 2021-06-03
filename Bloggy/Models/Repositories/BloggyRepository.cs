@@ -82,6 +82,8 @@ namespace Bloggy.Models.Repositories
                     existingBlogPost.ImageUrl = blogPost.ImageUrl;
                     existingBlogPost.CategoryId = blogPost.CategoryId;
                     existingBlogPost.UserId = blogPost.UserId;
+                    existingBlogPost.Location = blogPost.Location;
+                    existingBlogPost.TypeOfHazard = blogPost.TypeOfHazard;
 
                     _appDbContext.Entry(existingBlogPost).State = EntityState.Modified;
                     _appDbContext.SaveChanges();
