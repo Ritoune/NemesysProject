@@ -56,7 +56,6 @@ namespace Bloggy.Contollers
                             Name = b.Category.Name
                         },
                         Location = b.Location,
-                        TypeOfHazard = b.TypeOfHazard,
                         Author = new AuthorViewModel()
                         {
                             Id = b.UserId,
@@ -98,7 +97,6 @@ namespace Bloggy.Contollers
                             Name = post.Category.Name
                         },
                         Location = post.Location,
-                        TypeOfHazard = post.TypeOfHazard,
                         Author = new AuthorViewModel()
                         {
                             Id = post.UserId,
@@ -148,7 +146,7 @@ namespace Bloggy.Contollers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Create([Bind("Title, Content, ImageToUpload, CategoryId, Location, TypeOfHazard")] EditBlogPostViewModel newBlogPost)
+        public IActionResult Create([Bind("Title, Content, ImageToUpload, CategoryId, Location, StatusId")] EditBlogPostViewModel newBlogPost)
         {
             try
             {
@@ -175,9 +173,9 @@ namespace Bloggy.Contollers
                         CreatedDate = DateTime.UtcNow,
                         ImageUrl = "/images/blogposts/" + fileName,
                         ReadCount = 0,
+                        StatusId = 1,
                         CategoryId = newBlogPost.CategoryId,
                         Location = newBlogPost.Location,
-                        TypeOfHazard = newBlogPost.TypeOfHazard,
                         UserId = _userManager.GetUserId(User)
                     };
 
@@ -259,7 +257,6 @@ namespace Bloggy.Contollers
                             ImageUrl = existingBlogPost.ImageUrl,
                             CategoryId = existingBlogPost.CategoryId,
                             Location = existingBlogPost.Location,
-                            TypeOfHazard = existingBlogPost.TypeOfHazard,
                         };
 
                         //Load all categories and create a list of CategoryViewModel
@@ -290,7 +287,7 @@ namespace Bloggy.Contollers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([FromRoute] int id, [Bind("Id, Title, Content, ImageToUpload, CategoryId, Location, TypeOfHazard")] EditBlogPostViewModel updatedBlogPost)
+        public async Task<IActionResult> Edit([FromRoute] int id, [Bind("Id, Title, Content, ImageToUpload, CategoryId, Location")] EditBlogPostViewModel updatedBlogPost)
         {
             try {
                 var modelToUpdate = _bloggyRepository.GetBlogPostById(id);
@@ -332,7 +329,6 @@ namespace Bloggy.Contollers
                         modelToUpdate.CategoryId = updatedBlogPost.CategoryId;
                         modelToUpdate.UserId = _userManager.GetUserId(User);
                         modelToUpdate.Location = updatedBlogPost.Location;
-                        modelToUpdate.TypeOfHazard = updatedBlogPost.TypeOfHazard;
 
                         _bloggyRepository.UpdateBlogPost(modelToUpdate);
 

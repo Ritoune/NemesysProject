@@ -55,7 +55,6 @@ namespace Bloggy.Models.Repositories
                     ImageUrl = "/images/seed1.jpg",
                     CategoryId = 1,
                     Location = "parking",
-                    TypeOfHazard = "Equipment"
 
                 },
                 new BlogPost()
@@ -67,7 +66,6 @@ namespace Bloggy.Models.Repositories
                     ImageUrl = "/images/seed2.jpg",
                     CategoryId = 2,
                     Location = "At the entrance",
-                    TypeOfHazard = "Structure"
                 },
                 new BlogPost()
                 {
@@ -78,7 +76,6 @@ namespace Bloggy.Models.Repositories
                     ImageUrl = "/images/seed3.jpg",
                     CategoryId = 2,
                     Location = "In the library",
-                    TypeOfHazard = "Unsafe Act"
                 }
             };
         }
@@ -121,7 +118,6 @@ namespace Bloggy.Models.Repositories
                 existingBlogPost.CategoryId = blogPost.CategoryId;
                 existingBlogPost.UserId = blogPost.UserId;
                 existingBlogPost.Location = blogPost.Location;
-                existingBlogPost.TypeOfHazard = blogPost.TypeOfHazard;
             }
         }
 

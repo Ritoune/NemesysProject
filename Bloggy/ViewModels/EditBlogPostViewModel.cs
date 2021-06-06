@@ -28,8 +28,7 @@ namespace Bloggy.ViewModels
         public int CategoryId { get; set; }
         [Display(Name = "Location :")]
         public string Location { get; set; }
-        [Display(Name = "TypeOfHazard :")]
-        public string TypeOfHazard { get; set; }
+
 
 
 

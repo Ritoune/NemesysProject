@@ -107,9 +107,9 @@ namespace Bloggy.Models
                         UpdatedDate = DateTime.UtcNow,
                         ImageUrl = "/images/seed1.jpg",
                         CategoryId = 1,
+                        StatusId = 1,
                         UserId = user.Id,
                         Location = "In the parking",
-                        TypeOfHazard = "Equipment"
                     },
                     new BlogPost()
                     {
@@ -119,9 +119,9 @@ namespace Bloggy.Models
                         UpdatedDate = DateTime.UtcNow.AddDays(-1),
                         ImageUrl = "/images/seed2.jpg",
                         CategoryId = 2,
+                        StatusId = 1,
                         UserId = user.Id,
                         Location = "At the entrance",
-                        TypeOfHazard = "Structure"
                     },
                     new BlogPost()
                     {
@@ -131,9 +131,9 @@ namespace Bloggy.Models
                         UpdatedDate = DateTime.UtcNow.AddDays(-2),
                         ImageUrl = "/images/seed3.jpg",
                         CategoryId = 2,
+                        StatusId = 1,
                         UserId = user.Id,
                         Location = "In the library",
-                        TypeOfHazard = "Unsafe Act"
                     }
                 );
                 context.SaveChanges();

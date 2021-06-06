@@ -117,8 +117,7 @@ namespace Bloggy.Migrations
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TypeOfHazard")
-                        .HasColumnType("nvarchar(max)");
+
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
