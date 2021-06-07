@@ -92,6 +92,33 @@ namespace Bloggy.Models
                 context.SaveChanges();
             }
 
+            if (!context.Status.Any())
+            {
+                context.AddRange
+                (
+                    new Status()
+                    {
+                        Name = "Opened"
+                    },
+                    new Category()
+                    {
+                        Name = "Closed"
+                    },
+                    new Category()
+                    {
+                        Name = "Being investigating"
+                    },
+                    new Category()
+                    {
+                        Name = "No action required"
+                    }
+                   
+                );
+                context.SaveChanges();
+            }
+
+
+
             if (!context.BlogPosts.Any())
             {
                 //Grabbing first one

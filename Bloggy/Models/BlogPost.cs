@@ -24,6 +24,8 @@ namespace Bloggy.Models
 
         public int StatusId { get; set; }
 
+        public Status Status { get; set; }
+
         //Foreign Key - navigation property name + key property name
         public string UserId { get; set; }
         //Reference navigation property

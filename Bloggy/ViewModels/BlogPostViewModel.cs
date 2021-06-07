@@ -15,6 +15,8 @@ namespace Bloggy.ViewModels
         public int ReadCount { get; set; }
         public int StatusId { get; set; }
         public CategoryViewModel Category { get; set; }
+        public StatusViewModel Status { get; set; }
+
         public string Location { get; set; }
         public AuthorViewModel Author { get; set; }
     }

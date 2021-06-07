@@ -55,15 +55,34 @@ namespace Bloggy.Contollers
                             Id = b.Category.Id,
                             Name = b.Category.Name
                         },
+                        //Status = new StatusViewModel()
+                        //{
+                            //Id = b.Status.Id,
+                            //Name = b.Status.Name
+                        //},
                         Location = b.Location,
                         Author = new AuthorViewModel()
                         {
                             Id = b.UserId,
                             Name = (_userManager.FindByIdAsync(b.UserId).Result != null) ? _userManager.FindByIdAsync(b.UserId).Result.UserName : "Anonymous"
-                        }
+                        },
+
+                    }),
+                    
+                    BlogPostsForStatus = _bloggyRepository
+                    .GetAllBlogPostsForStatus()
+                    .OrderByDescending(b => b.CreatedDate)
+                    .Select(b => new BlogPostViewModel
+                    {
+                        
+                        Status = new StatusViewModel()
+                        {
+                        Id = b.Status.Id,
+                        Name = b.Status.Name
+                        },
+                })
 
 
-                    })
                 };
                 return View(model);
             }
@@ -96,13 +115,27 @@ namespace Bloggy.Contollers
                             Id = post.Category.Id,
                             Name = post.Category.Name
                         },
+                        //Status = new StatusViewModel()
+                        //{
+                        ////Id = post.Status.Id,
+                        //Name = post.Status.Name
+                        //},
                         Location = post.Location,
                         Author = new AuthorViewModel()
                         {
                             Id = post.UserId,
                             Name = (_userManager.FindByIdAsync(post.UserId).Result != null) ? _userManager.FindByIdAsync(post.UserId).Result.UserName : "Anonymous"
                         }
+
                     };
+                    post = _bloggyRepository.GetBlogPostByIdForStatus(id);
+                    {
+                        model.Status = new StatusViewModel()
+                        {
+                            Id = post.Status.Id,
+                            Name = post.Status.Name
+                        };
+                    }
 
                     return View(model);
                 }
@@ -194,6 +227,12 @@ namespace Bloggy.Contollers
                     //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CategoryId
                     newBlogPost.CategoryList = categoryList;
 
+                    var statusList = _bloggyRepository.GetAllStatus().Select(c => new StatusViewModel()
+                    {
+                        Id = c.Id,
+                        Name = c.Name
+                    }).ToList();
+
                     return View(newBlogPost);
                 }
             }
@@ -225,6 +264,16 @@ namespace Bloggy.Contollers
 
                     //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CategoryId
                     newBlogPost.CategoryList = categoryList;
+
+                    //Load all categories and create a list of CategoryViewModel
+                    var statusList = _bloggyRepository.GetAllStatus().Select(c => new StatusViewModel()
+                    {
+                        Id = c.Id,
+                        Name = c.Name
+                    }).ToList();
+
+                    //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CategoryId
+                    newBlogPost.StatusList = statusList;
                 }
 
                 return View(newBlogPost);
@@ -268,6 +317,16 @@ namespace Bloggy.Contollers
 
                         //Attach to view model - view will pre-select according to the value in CategoryId
                         model.CategoryList = categoryList;
+
+                        //Load all categories and create a list of CategoryViewModel
+                        var statusList = _bloggyRepository.GetAllStatus().Select(c => new StatusViewModel()
+                        {
+                            Id = c.Id,
+                            Name = c.Name
+                        }).ToList();
+
+                        //Attach to view model - view will pre-select according to the value in CategoryId
+                        model.StatusList = statusList;
 
                         return View(model);
                     }
@@ -348,6 +407,16 @@ namespace Bloggy.Contollers
 
                     //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CategoryId
                     updatedBlogPost.CategoryList = categoryList;
+
+                    //Load all categories and create a list of CategoryViewModel
+                    var statusList = _bloggyRepository.GetAllStatus().Select(c => new StatusViewModel()
+                    {
+                        Id = c.Id,
+                        Name = c.Name
+                    }).ToList();
+
+                    //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CategoryId
+                    updatedBlogPost.StatusList = statusList;
 
                     return View(updatedBlogPost);
                 }

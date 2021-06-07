@@ -43,6 +43,27 @@ namespace Bloggy.Migrations
                 principalTable: "Categories",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.CreateTable(
+                name: "Status",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Status", x => x.Id);
+                });
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_BlogPosts_Statuss_StatusId",
+                table: "BlogPosts",
+                column: "Status",
+                principalTable: "Status",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -53,6 +74,13 @@ namespace Bloggy.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropForeignKey(
+               name: "FK_BlogPosts_Status_StatusId",
+               table: "BlogPosts");
+
+            migrationBuilder.DropTable(
+                name: "Status");
 
             migrationBuilder.RenameColumn(
                 name: "CategoryId",

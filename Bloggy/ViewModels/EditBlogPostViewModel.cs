@@ -34,5 +34,7 @@ namespace Bloggy.ViewModels
 
         //Property used solely to populate drop down
         public List<CategoryViewModel> CategoryList { get; set; }
+
+        public List<StatusViewModel> StatusList { get; set; }
     }
 }

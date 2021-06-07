@@ -32,7 +32,10 @@ namespace Bloggy.Models.Repositories
             try
             {
                 //Using Eager loading with Include
+                //var app = _appDbContext.BlogPosts.Include(b => b.Category).OrderBy(b => b.CreatedDate);
+                //return app.Include(b => b.Category).OrderBy(b => b.CreatedDate);
                 return _appDbContext.BlogPosts.Include(b => b.Category).OrderBy(b => b.CreatedDate);
+                //return _appDbContext.BlogPosts.Include(b => b.Status).OrderBy(b => b.CreatedDate);
             }
             catch(Exception ex)
             {
@@ -41,12 +44,44 @@ namespace Bloggy.Models.Repositories
             }
         }
 
+        public IEnumerable<BlogPost> GetAllBlogPostsForStatus()
+        {
+            try
+            {
+                //Using Eager loading with Include
+                //return _appDbContext.BlogPosts.Include(b => b.Status).OrderBy(b => b.CreatedDate);
+                return _appDbContext.BlogPosts.Include(b => b.Status).OrderBy(b => b.CreatedDate);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+        }
+
+
         public BlogPost GetBlogPostById(int blogPostId)
         {
             try
             {
                 //Using Eager loading with Include
                 return _appDbContext.BlogPosts.Include(b => b.Category).Include(b => b.User).FirstOrDefault(p => p.Id == blogPostId);
+               // return _appDbContext.BlogPosts.Include(b => b.Status).Include(b => b.User).FirstOrDefault(p => p.Id == blogPostId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+        }
+
+        public BlogPost GetBlogPostByIdForStatus(int blogPostId)
+        {
+            try
+            {
+                //Using Eager loading with Include
+                //return _appDbContext.BlogPosts.Include(b => b.Category).Include(b => b.User).FirstOrDefault(p => p.Id == blogPostId);
+                return _appDbContext.BlogPosts.Include(b => b.Status).Include(b => b.User).FirstOrDefault(p => p.Id == blogPostId);
             }
             catch (Exception ex)
             {
@@ -123,6 +158,33 @@ namespace Bloggy.Models.Repositories
             }
         }
 
+        public IEnumerable<Status> GetAllStatus()
+        {
+            try
+            {
+                //Not loading related blog posts
+                return _appDbContext.Status;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+        }
+
+        public Status GetStatusById(int statusId)
+        {
+            try
+            {
+                //Not loading related blog posts
+                return _appDbContext.Status.FirstOrDefault(c => c.Id == statusId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+        }
 
 
     }

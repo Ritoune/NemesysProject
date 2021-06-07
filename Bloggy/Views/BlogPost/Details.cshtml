@@ -10,8 +10,9 @@
     <div class="card-body">
         <h3 class="card-title">@Model.Title</h3>
         <p class="small">Type of hazard @Model.Category.Name</p>
+        <p class="small">Status @Model.Status.Name</p>
         <p class="small">Location : @Model.Location </p>
-        <p class="small">@Model.CreatedDate.ToShortDateString()</p
+        <p class="small">@Model.CreatedDate.ToShortDateString()</p>
         <p class="small">By @Model.Author.Name</p>
     </div>
 </div>
