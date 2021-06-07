@@ -22,7 +22,7 @@ namespace Bloggy.Models.Repositories
 
             if (_status == null)
             {
-                InitializeCategories();
+                InitializeStatus();
             }
 
             if (_posts == null)
