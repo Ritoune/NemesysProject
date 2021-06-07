@@ -85,6 +85,7 @@ namespace Bloggy.Models.Repositories
                     Title = "AGA Today",
                     Content = "Today's AGA is characterized by a series of discussions and debates around ...",
                     CreatedDate = DateTime.UtcNow,
+                    SpottedDate = DateTime.UtcNow,
                     ImageUrl = "/images/seed1.jpg",
                     CategoryId = 1,
                     StatusId = 1,
@@ -97,6 +98,7 @@ namespace Bloggy.Models.Repositories
                     Title = "Traffic is incredible",
                     Content = "Today's traffic can't be described using words. Only an image can do that ...",
                     CreatedDate = DateTime.UtcNow.AddDays(-1),
+                    SpottedDate = DateTime.UtcNow.AddDays(-1),
                     ImageUrl = "/images/seed2.jpg",
                     CategoryId = 2,
                     StatusId = 1,
@@ -108,6 +110,7 @@ namespace Bloggy.Models.Repositories
                     Title = "When is Spring really starting?",
                     Content = "Clouds clouds all around us. I thought spring started already, but ...",
                     CreatedDate = DateTime.UtcNow.AddDays(-2),
+                    SpottedDate = DateTime.UtcNow.AddDays(-2),
                     ImageUrl = "/images/seed3.jpg",
                     CategoryId = 2,
                     StatusId = 1,
@@ -171,6 +174,7 @@ namespace Bloggy.Models.Repositories
                 existingBlogPost.ImageUrl = blogPost.ImageUrl;
                 existingBlogPost.Title = blogPost.Title;
                 existingBlogPost.Content = blogPost.Content;
+                existingBlogPost.SpottedDate = blogPost.SpottedDate;
                 existingBlogPost.UpdatedDate = blogPost.UpdatedDate;
                 existingBlogPost.CategoryId = blogPost.CategoryId;
                 existingBlogPost.StatusId = blogPost.StatusId;

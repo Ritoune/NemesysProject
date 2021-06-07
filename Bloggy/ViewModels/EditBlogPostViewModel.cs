@@ -14,6 +14,8 @@ namespace Bloggy.ViewModels
         [StringLength(50)]
         [Display(Name = "Report heading")]
         public string Title { get; set; }
+        [Display(Name = "Spotted Date :")]
+        public DateTime SpottedDate { get; set; }
         [Required(ErrorMessage = "Report description is required")]
         [StringLength(1500, ErrorMessage = "Report description cannot be longer than 1500 characters")]
         [Display(Name = "Description")]

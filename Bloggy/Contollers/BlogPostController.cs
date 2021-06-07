@@ -46,6 +46,7 @@ namespace Bloggy.Contollers
                     {
                         Id = b.Id,
                         CreatedDate = b.CreatedDate,
+                        SpottedDate = b.SpottedDate,
                         Content = b.Content,
                         ImageUrl = b.ImageUrl,
                         ReadCount = b.ReadCount,
@@ -106,6 +107,7 @@ namespace Bloggy.Contollers
                     {
                         Id = post.Id,
                         CreatedDate = post.CreatedDate,
+                        SpottedDate = post.SpottedDate,
                         ImageUrl = post.ImageUrl,
                         ReadCount = post.ReadCount,
                         Title = post.Title,
@@ -179,7 +181,7 @@ namespace Bloggy.Contollers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Create([Bind("Title, Content, ImageToUpload, CategoryId, Location, StatusId")] EditBlogPostViewModel newBlogPost)
+        public IActionResult Create([Bind("Title, Content, ImageToUpload, CategoryId, Location, StatusId, SpottedDate")] EditBlogPostViewModel newBlogPost)
         {
             try
             {
@@ -204,6 +206,7 @@ namespace Bloggy.Contollers
                         Title = newBlogPost.Title,
                         Content = newBlogPost.Content,
                         CreatedDate = DateTime.UtcNow,
+                        SpottedDate = DateTime.UtcNow,
                         ImageUrl = "/images/blogposts/" + fileName,
                         ReadCount = 0,
                         StatusId = 1,
@@ -303,6 +306,7 @@ namespace Bloggy.Contollers
                             Id = existingBlogPost.Id,
                             Title = existingBlogPost.Title,
                             Content = existingBlogPost.Content,
+                            SpottedDate = existingBlogPost.SpottedDate,
                             ImageUrl = existingBlogPost.ImageUrl,
                             CategoryId = existingBlogPost.CategoryId,
                             Location = existingBlogPost.Location,
@@ -346,7 +350,7 @@ namespace Bloggy.Contollers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([FromRoute] int id, [Bind("Id, Title, Content, ImageToUpload, CategoryId, Location")] EditBlogPostViewModel updatedBlogPost)
+        public async Task<IActionResult> Edit([FromRoute] int id, [Bind("Id, Title, Content, ImageToUpload, CategoryId, Location, SpottedDate")] EditBlogPostViewModel updatedBlogPost)
         {
             try {
                 var modelToUpdate = _bloggyRepository.GetBlogPostById(id);
@@ -385,6 +389,7 @@ namespace Bloggy.Contollers
                         modelToUpdate.Content = updatedBlogPost.Content;
                         modelToUpdate.ImageUrl = imageUrl;
                         modelToUpdate.UpdatedDate = DateTime.Now;
+                        modelToUpdate.SpottedDate = DateTime.Now;
                         modelToUpdate.CategoryId = updatedBlogPost.CategoryId;
                         modelToUpdate.UserId = _userManager.GetUserId(User);
                         modelToUpdate.Location = updatedBlogPost.Location;

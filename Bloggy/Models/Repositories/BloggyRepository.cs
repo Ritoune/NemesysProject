@@ -114,6 +114,7 @@ namespace Bloggy.Models.Repositories
                     existingBlogPost.Title = blogPost.Title;
                     existingBlogPost.Content = blogPost.Content;
                     existingBlogPost.UpdatedDate = blogPost.UpdatedDate;
+                    existingBlogPost.SpottedDate = blogPost.SpottedDate;
                     existingBlogPost.ImageUrl = blogPost.ImageUrl;
                     existingBlogPost.CategoryId = blogPost.CategoryId;
                     existingBlogPost.UserId = blogPost.UserId;

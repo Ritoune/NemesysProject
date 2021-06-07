@@ -11,6 +11,7 @@ namespace Bloggy.Models
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public DateTime SpottedDate { get; set; }
         public string Location { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }

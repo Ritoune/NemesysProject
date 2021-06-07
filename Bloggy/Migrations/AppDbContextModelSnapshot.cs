@@ -112,6 +112,9 @@ namespace Bloggy.Migrations
                     b.Property<int>("ReadCount")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("Spotteddate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
@@ -119,6 +122,9 @@ namespace Bloggy.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("SpottedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
@@ -148,24 +154,22 @@ namespace Bloggy.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-             
                 });
 
             modelBuilder.Entity("Bloggy.Models.Status", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int")
-                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                b.Property<string>("Name")
-                    .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                b.HasKey("Id");
+                    b.HasKey("Id");
 
-                b.ToTable("Status");
-            });
+                    b.ToTable("Status");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -384,9 +388,9 @@ namespace Bloggy.Migrations
                 });
 
             modelBuilder.Entity("Bloggy.Models.Status", b =>
-            {
-                b.Navigation("BlogPosts");
-            });
+                {
+                    b.Navigation("BlogPosts");
+                });
 #pragma warning restore 612, 618
         }
     }
