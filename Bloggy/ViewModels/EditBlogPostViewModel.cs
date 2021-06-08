@@ -28,6 +28,7 @@ namespace Bloggy.ViewModels
         //Property used to bind user selection
         [Required(ErrorMessage = "Type of hazard is required")]
         public int CategoryId { get; set; }
+        public int StatusId { get; set; }
         [Display(Name = "Location :")]
         public string Location { get; set; }
 

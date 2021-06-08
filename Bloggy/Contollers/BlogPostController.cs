@@ -334,6 +334,43 @@ namespace Bloggy.Contollers
 
                         return View(model);
                     }
+                    /*if (User.IsInRole("Administrator"))
+                    {
+                        EditBlogPostViewModel model = new EditBlogPostViewModel()
+                        {
+                            Id = existingBlogPost.Id,
+                            Title = existingBlogPost.Title,
+                            Content = existingBlogPost.Content,
+                            SpottedDate = existingBlogPost.SpottedDate,
+                            ImageUrl = existingBlogPost.ImageUrl,
+                            CategoryId = existingBlogPost.CategoryId,
+                            Location = existingBlogPost.Location,
+                            StatusId = existingBlogPost.StatusId,
+
+                        };
+
+                        //Load all categories and create a list of CategoryViewModel
+                        var categoryList = _bloggyRepository.GetAllCategories().Select(c => new CategoryViewModel()
+                        {
+                            Id = c.Id,
+                            Name = c.Name
+                        }).ToList();
+
+                        //Attach to view model - view will pre-select according to the value in CategoryId
+                        model.CategoryList = categoryList;
+
+                        //Load all categories and create a list of CategoryViewModel
+                        var statusList = _bloggyRepository.GetAllStatus().Select(c => new StatusViewModel()
+                        {
+                            Id = c.Id,
+                            Name = c.Name
+                        }).ToList();
+
+                        //Attach to view model - view will pre-select according to the value in CategoryId
+                        model.StatusList = statusList;
+
+                        return View(model);
+                    }*/
                     else
                         return Unauthorized();
                 }

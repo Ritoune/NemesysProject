@@ -12,8 +12,8 @@
         <p class="small">Type of hazard : @Model.Category.Name</p>
         <p class="small">Status : @Model.Status.Name</p>
         <p class="small">Location : @Model.Location </p>
-        <p class="small">Spotted Date : @Model.SpottedDate.ToShortDateString()</p>
-        <p class="small">Created Date : @Model.CreatedDate.ToShortDateString()</p>
+        <p class="small">Spotted Date : @Model.SpottedDate</p>
+        <p class="small">Created Date : @Model.CreatedDate</p>
         <p class="small">By @Model.Author.Name</p>
     </div>
 </div>
@@ -22,7 +22,7 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    if (UserManager.GetUserAsync(User).Result.Id == Model.Author.Id)
+   if (UserManager.GetUserAsync(User).Result.Id == Model.Author.Id)
     {
         <a asp-controller="BlogPost" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a>
     }
@@ -31,5 +31,5 @@
 }
 @if (User.IsInRole("Administrator"))
 {
-    <a asp-controller="BlogPost" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a>
+    <a asp-controller="BlogPost" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit investigation</a>
 }
