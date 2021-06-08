@@ -1,12 +1,12 @@
 ﻿@model Bloggy.ViewModels.BlogPostListViewModel
 
 @{
-    ViewData["Title"] = "Blog Posts";
+    ViewData["Title"] = "reports";
 }
 
 <h1>@ViewData["Title"]</h1>
 
-<h2>Showing @Model.TotalEntries blog entries</h2>
+<h2>Showing @Model.TotalEntries report entries</h2>
 
 <div class="row">
     @foreach (var blogPost in Model.BlogPosts)
