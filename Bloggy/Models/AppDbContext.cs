@@ -18,6 +18,7 @@ namespace Bloggy.Models
         public DbSet<BlogPost> BlogPosts { get; set; }
 
         public DbSet<Status> Status { get; set; }
+        public DbSet<Investigation> Investigations { get; set; }
     }
 
 }
