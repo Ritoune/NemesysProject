@@ -310,6 +310,32 @@ namespace Bloggy.Models.Repositories
             }
         }
 
+        public Upvotes GetUpVoteByReportIdAndUserId(int reportId, string userId)
+        {
+            try
+            {
+                //Not loading related report posts
+                return _appDbContext.Upvotes.FirstOrDefault(c => c.BlogPostId == reportId && c.UserId == userId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+        }
 
+        public void CreateUpVote(Upvotes upvote)
+        {
+            try
+            {
+                _appDbContext.Upvotes.Add(upvote);
+                _appDbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+        }
     }
 }

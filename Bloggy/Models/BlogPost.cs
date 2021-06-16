@@ -33,7 +33,9 @@ namespace Bloggy.Models
         public bool HasInvestigation { get; set; }
         public ApplicationUser User { get; set; }
 
-        
+        public int Votes { get; set; }
+
+
 
 
     }

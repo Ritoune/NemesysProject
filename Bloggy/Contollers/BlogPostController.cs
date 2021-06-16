@@ -476,5 +476,45 @@ namespace Bloggy.Contollers
                 return View("Error");
             }
         }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> UpVote(int id)
+        {
+            try
+            {
+                Upvotes existingUpVote = _bloggyRepository.GetUpVoteByReportIdAndUserId(id, _userManager.GetUserId(User));
+
+                BlogPost reportToUpdate = _bloggyRepository.GetBlogPostById(id);
+                if (reportToUpdate == null)
+                {
+                    return NotFound();
+                }
+
+                if (existingUpVote == null)
+                {
+                    int NumberOfVote = reportToUpdate.Votes;
+
+                    reportToUpdate.Votes += 1;
+                    _bloggyRepository.UpdateBlogPost(reportToUpdate);
+
+                    Upvotes upvote = new Upvotes()
+                    {
+                        BlogPostId = id,
+                        UserId = _userManager.GetUserId(User)
+                    };
+
+                    _bloggyRepository.CreateUpVote(upvote);
+                }
+
+                return RedirectToAction("Index");
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message, ex.Data);
+                return View("Error");
+            }
+        }
     }
 }

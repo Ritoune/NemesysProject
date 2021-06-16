@@ -28,6 +28,9 @@ namespace Bloggy.Models.Interfaces
         IEnumerable<Status> GetAllStatus();
         Category GetCategoryById(int categoryId);
         Status GetStatusById(int statusId);
+
+        public Upvotes GetUpVoteByReportIdAndUserId(int reportId, string userId);
+        public void CreateUpVote(Upvotes upvote);
     }
 
 }

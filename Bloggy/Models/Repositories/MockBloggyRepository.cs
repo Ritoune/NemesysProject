@@ -13,6 +13,7 @@ namespace Bloggy.Models.Repositories
         private List<Category> _categories;
         private List<Status> _status;
         private List<Investigation> _investigations;
+        private List<Upvotes> _upvotes;
 
         public MockBloggyRepository()
         {
@@ -270,6 +271,17 @@ namespace Bloggy.Models.Repositories
         public Status GetStatusById(int statusId)
         {
             return _status.FirstOrDefault(c => c.Id == statusId); //if not found, it returns null
+        }
+
+        public Upvotes GetUpVoteByReportIdAndUserId(int reportId, string userId)
+        {
+            return _upvotes.FirstOrDefault(c => c.BlogPostId == reportId && c.UserId == userId); //if not found, it returns null
+        }
+
+        public void CreateUpVote(Upvotes upvote)
+        {
+            upvote.Id = _upvotes.Count + 1;
+            _upvotes.Add(upvote);
         }
     }
 }
