@@ -138,6 +138,7 @@ namespace Bloggy.Models
                         StatusId = 6,
                         UserId = user.Id,
                         Location = "In the parking",
+                        HasInvestigation = false
                     },
                     new BlogPost()
                     {
@@ -151,6 +152,7 @@ namespace Bloggy.Models
                         StatusId = 6,
                         UserId = user.Id,
                         Location = "At the entrance",
+                        HasInvestigation = false
                     },
                     new BlogPost()
                     {
@@ -164,6 +166,7 @@ namespace Bloggy.Models
                         StatusId = 6,
                         UserId = user.Id,
                         Location = "In the library",
+                        HasInvestigation = false
                     }
                 );
                 context.SaveChanges();

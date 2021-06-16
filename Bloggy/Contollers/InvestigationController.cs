@@ -139,7 +139,7 @@ namespace Bloggy.Contollers
     
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> Create([FromRoute] int id, [Bind("DescriptionOfInvestigation, BlogPostId, StatusId")] EditInvestigationViewModel newInvestigation)
+    public async Task<IActionResult> Create([FromRoute] int id, [Bind("DescriptionOfInvestigation, BlogPostId, StatusId, HasInvestigation")] EditInvestigationViewModel newInvestigation)
     {
         try
         {
@@ -157,6 +157,7 @@ namespace Bloggy.Contollers
                     _bloggyRepository.CreateInvestigation(investigation);
                     var modelToUpdate = _bloggyRepository.GetBlogPostById(id);
                     modelToUpdate.StatusId = newInvestigation.StatusId;
+                    modelToUpdate.HasInvestigation = true;
                     _bloggyRepository.UpdateBlogPost(modelToUpdate);
 
                     return RedirectToAction("Index");

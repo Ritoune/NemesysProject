@@ -30,6 +30,7 @@ namespace Bloggy.Models
         //Foreign Key - navigation property name + key property name
         public string UserId { get; set; }
         //Reference navigation property
+        public bool HasInvestigation { get; set; }
         public ApplicationUser User { get; set; }
 
         

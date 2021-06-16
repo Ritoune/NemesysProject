@@ -31,7 +31,7 @@ namespace Bloggy.ViewModels
         public int StatusId { get; set; }
         [Display(Name = "Location :")]
         public string Location { get; set; }
-
+        public bool HasInvestigation { get; set; }
 
 
 

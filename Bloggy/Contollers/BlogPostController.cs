@@ -51,6 +51,7 @@ namespace Bloggy.Contollers
                         ImageUrl = b.ImageUrl,
                         ReadCount = b.ReadCount,
                         Title = b.Title,
+                        HasInvestigation = b.HasInvestigation,
                         Category = new CategoryViewModel()
                         {
                             Id = b.Category.Id,
@@ -97,6 +98,7 @@ namespace Bloggy.Contollers
                         ReadCount = post.ReadCount,
                         Title = post.Title,
                         Content = post.Content,
+                        HasInvestigation = post.HasInvestigation,
                         Category = new CategoryViewModel()
                         {
                             Id = post.Category.Id,
@@ -166,7 +168,7 @@ namespace Bloggy.Contollers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Create([Bind("Title, Content, ImageToUpload, Location, StatusId, SpottedDate, CategoryId")] EditBlogPostViewModel newBlogPost)
+        public IActionResult Create([Bind("Title, Content, ImageToUpload, Location, StatusId, SpottedDate, CategoryId, HasInvestigation")] EditBlogPostViewModel newBlogPost)
         {
             try
             {
@@ -198,7 +200,8 @@ namespace Bloggy.Contollers
                         StatusId = 6,
                         CategoryId = newBlogPost.CategoryId,
                         Location = newBlogPost.Location,
-                        UserId = _userManager.GetUserId(User)
+                        UserId = _userManager.GetUserId(User),
+                        HasInvestigation = false
                     };
 
                     _bloggyRepository.CreateBlogPost(blogPost);
@@ -298,6 +301,7 @@ namespace Bloggy.Contollers
                             ImageUrl = existingBlogPost.ImageUrl,
                             CategoryId = existingBlogPost.CategoryId,
                             Location = existingBlogPost.Location,
+                            HasInvestigation = existingBlogPost.HasInvestigation,
                         };
 
                         //Load all categories and create a list of CategoryViewModel

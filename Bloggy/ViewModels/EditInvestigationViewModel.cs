@@ -24,6 +24,7 @@ namespace Bloggy.ViewModels
         //Property used to bind user selection
         [Required(ErrorMessage = "Status is required")]
         public int StatusId { get; set; }
+        public bool HasInvestigation { get; set; }
         public List<StatusViewModel> StatusList { get; set; }
         //Property used solely to populate drop down
         public List<BlogPostViewModel> BlogPostList { get; set; }

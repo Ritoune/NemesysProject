@@ -31,5 +31,8 @@
 }
 @if (User.IsInRole("Administrator"))
 {
-    <a asp-controller="Investigation" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-primary">Create investigation</a>
+    if(@Model.HasInvestigation == false)
+    {
+        <a asp-controller="Investigation" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-primary">Create investigation</a>
+    }
 }
