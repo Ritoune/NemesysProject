@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Bloggy.Models.Interfaces;
+﻿using Bloggy.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bloggy.Models.Repositories
 {
@@ -107,6 +106,21 @@ namespace Bloggy.Models.Repositories
             }
         }
 
+        public Investigation GetInvestigationByIdReport(int ReportId)
+        {
+            try
+            {
+                //Using Eager loading with Include
+                return _appDbContext.Investigations.FirstOrDefault(p => p.BlogPostId == ReportId);
+                // return _appDbContext.BlogPosts.Include(b => b.Status).Include(b => b.User).FirstOrDefault(p => p.Id == blogPostId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+        }
+
         public BlogPost GetBlogPostByIdForStatus(int blogPostId)
         {
             try
@@ -114,6 +128,48 @@ namespace Bloggy.Models.Repositories
                 //Using Eager loading with Include
                 //return _appDbContext.BlogPosts.Include(b => b.Category).Include(b => b.User).FirstOrDefault(p => p.Id == blogPostId);
                 return _appDbContext.BlogPosts.Include(b => b.Status).Include(b => b.User).FirstOrDefault(p => p.Id == blogPostId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+        }
+
+        public void DeleteReport(BlogPost post)
+        {
+            try
+            {
+                if(post.HasInvestigation == false)
+                {
+                    _appDbContext.BlogPosts.Remove(post);
+                    _appDbContext.SaveChanges();
+                }
+                else
+                {
+                    var investigation = _appDbContext.Investigations.FirstOrDefault(p => p.BlogPostId == post.Id);
+                    _appDbContext.Investigations.Remove(investigation);
+                    _appDbContext.BlogPosts.Remove(post);
+
+                    _appDbContext.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+        }
+
+        public void DeleteInvestigationById(int id)
+        {
+            try
+            {
+                var investigation = _appDbContext.Investigations.FirstOrDefault(p => p.Id == id);
+
+                _appDbContext.Investigations.Remove(investigation);
+                 _appDbContext.SaveChanges();
+                
             }
             catch (Exception ex)
             {

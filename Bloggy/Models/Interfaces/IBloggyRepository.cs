@@ -12,6 +12,9 @@ namespace Bloggy.Models.Interfaces
         public Investigation GetInvestigationById(int investigationId);
         public void CreateInvestigation(Investigation investigation);
         public void UpdateInvestigation(Investigation investigation);
+        public void DeleteInvestigationById(int id);
+        public void DeleteReport(BlogPost post);
+        public Investigation GetInvestigationByIdReport(int ReportId);
 
         IEnumerable<BlogPost> GetAllBlogPostsForStatus();
         BlogPost GetBlogPostById(int blogPostId);

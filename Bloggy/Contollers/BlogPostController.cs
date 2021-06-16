@@ -425,6 +425,37 @@ namespace Bloggy.Contollers
             }
         }
 
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Delete(int id)
+        {
+            Console.Clear();
+            if (id == null)
+            {
+                Console.WriteLine(id);
+                return NotFound();
+            }
+
+            var report = _bloggyRepository.GetBlogPostById(id);
+            if (report == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(report);
+        }
+
+        // POST: Movies/Delete/5
+
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var report = _bloggyRepository.GetBlogPostById(id);
+            _bloggyRepository.DeleteReport(report);
+
+            return RedirectToAction("Index");
+        }
+
+
         [HttpGet]
         [Authorize(Roles ="Administrator")]
         public IActionResult Dashboard()

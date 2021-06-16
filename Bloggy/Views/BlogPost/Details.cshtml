@@ -25,6 +25,7 @@
     if (UserManager.GetUserAsync(User).Result.Id == Model.Author.Id)
     {
         <a asp-controller="BlogPost" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a>
+        <a asp-controller="BlogPost" asp-action="DeleteConfirmed" asp-route-id="@Model.Id" class="btn btn-primary">Delete</a>
     }
 }
 

@@ -174,6 +174,34 @@ namespace Bloggy.Models.Repositories
             return investigation;
         }
 
+        public Investigation GetInvestigationByIdReport(int ReportId)
+         {
+            var investigation = _investigations.FirstOrDefault(p => p.BlogPostId == ReportId); //if not found, it returns null
+       
+            return investigation;
+        }
+
+        public void DeleteInvestigationById(int id)
+        {
+            var investigation = _investigations.FirstOrDefault(p => p.Id == id); //if not found, it returns null
+
+            _investigations.Remove(investigation);
+        }
+
+        public void DeleteReport(BlogPost post)
+        {
+            if (post.HasInvestigation == false)
+            {
+                _posts.Remove(post);
+            }
+            else
+            {
+                var investigation = _investigations.FirstOrDefault(p => p.BlogPostId == post.Id);
+                _investigations.Remove(investigation);
+                _posts.Remove(post);
+            }
+        }
+
         public BlogPost GetBlogPostByIdForStatus(int blogPostId)
         {
             var post = _posts.FirstOrDefault(p => p.Id == blogPostId); //if not found, it returns null
