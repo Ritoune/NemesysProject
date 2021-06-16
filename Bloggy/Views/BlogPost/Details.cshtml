@@ -22,7 +22,7 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-   if (UserManager.GetUserAsync(User).Result.Id == Model.Author.Id)
+    if (UserManager.GetUserAsync(User).Result.Id == Model.Author.Id)
     {
         <a asp-controller="BlogPost" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a>
     }
@@ -31,7 +31,7 @@
 }
 @if (User.IsInRole("Administrator"))
 {
-    if(@Model.HasInvestigation == false)
+    if (@Model.HasInvestigation == false)
     {
         <a asp-controller="Investigation" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-primary">Create investigation</a>
     }

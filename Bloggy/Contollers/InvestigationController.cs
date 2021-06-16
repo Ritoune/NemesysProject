@@ -48,6 +48,11 @@ namespace Bloggy.Contollers
                         DescriptionOfInvestigation = b.DescriptionOfInvestigation,
                         DateOfAction = b.DateOfAction,
                         UserId = b.UserId,
+                        Author = new AuthorViewModel()
+                        {
+                            Id = b.UserId,
+                            Name = (_userManager.FindByIdAsync(b.UserId).Result != null) ? _userManager.FindByIdAsync(b.UserId).Result.UserName : "Anonymous"
+                        },
                         BlogPost = new BlogPostViewModel()
                         {
                             Id = b.BlogPostId,
@@ -88,7 +93,72 @@ namespace Bloggy.Contollers
                 return View("Error");
             }
         }
-    
+
+        public IActionResult Details(int id)
+        {
+            try
+            {
+                var investigation = _bloggyRepository.GetInvestigationById(id);
+                if (investigation == null)
+                    return NotFound();
+                else
+                {
+                    var model = new InvestigationViewModel()
+                    {
+                        Id = investigation.Id,
+                        DescriptionOfInvestigation = investigation.DescriptionOfInvestigation,
+                        DateOfAction = investigation.DateOfAction,
+                        UserId = investigation.UserId,
+                        Author = new AuthorViewModel()
+                        {
+                            Id = investigation.UserId,
+                            Name = (_userManager.FindByIdAsync(investigation.UserId).Result != null) ? _userManager.FindByIdAsync(investigation.UserId).Result.UserName : "Anonymous"
+                        },
+                        BlogPostId = investigation.BlogPostId,
+                        BlogPost = new BlogPostViewModel()
+                        {
+                            Id = investigation.BlogPost.Id,
+                            CreatedDate = investigation.BlogPost.CreatedDate,
+                            SpottedDate = investigation.BlogPost.SpottedDate,
+                            ImageUrl = investigation.BlogPost.ImageUrl,
+                            ReadCount = investigation.BlogPost.ReadCount,
+                            Title = investigation.BlogPost.Title,
+                            Content = investigation.BlogPost.Content,
+                            HasInvestigation = investigation.BlogPost.HasInvestigation,
+                            Category = new CategoryViewModel()
+                            {
+                                Id = investigation.BlogPost.Category.Id,
+                                Name = investigation.BlogPost.Category.Name
+                            },
+                            Status = new StatusViewModel()
+                            {
+                                Id = investigation.BlogPost.Status.Id,
+                                Name = investigation.BlogPost.Status.Name
+                            },
+                            Location = investigation.BlogPost.Location,
+                            Author = new AuthorViewModel()
+                            {
+                                Id = investigation.BlogPost.UserId,
+                                Name = (_userManager.FindByIdAsync(investigation.UserId).Result != null) ? _userManager.FindByIdAsync(investigation.UserId).Result.UserName : "Anonymous"
+                            }
+
+                        },
+                    };
+
+
+                    
+
+                    return View(model);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message, ex.Data);
+                return View("Error");
+            }
+
+        }
+
 
         [HttpGet]
         [Authorize]
@@ -244,5 +314,109 @@ namespace Bloggy.Contollers
             return View("Error");
         }
     }
-}
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Edit(int id)
+        {
+            try
+            {
+                var existingInvestigation = _bloggyRepository.GetInvestigationById(id);
+                if (existingInvestigation != null)
+                {
+                    //Check if the current user has access to this resource
+                    var currentUser = await _userManager.GetUserAsync(User);
+                    if (existingInvestigation.User.Id == currentUser.Id)
+                    {
+                        EditInvestigationViewModel model = new EditInvestigationViewModel()
+                        {
+                            Id = existingInvestigation.Id,
+                            DescriptionOfInvestigation = existingInvestigation.DescriptionOfInvestigation,
+                            DateOfAction = existingInvestigation.DateOfAction,
+                            UserId = existingInvestigation.UserId
+                        };
+
+
+                        //Load all categories and create a list of CategoryViewModel
+                        var statusList = _bloggyRepository.GetAllStatus().Select(c => new StatusViewModel()
+                        {
+                            Id = c.Id,
+                            Name = c.Name
+                        }).ToList();
+
+                        //Attach to view model - view will pre-select according to the value in CategoryId
+                        model.StatusList = statusList;
+
+                        return View(model);
+                    }
+                    else
+                        return Unauthorized();
+                }
+                else
+                    return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message, ex.Data);
+                return View("Error");
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([FromRoute] int id, [Bind("Id, DescriptionOfInvestigation, DateOfAction, UserId, StatusId")] EditInvestigationViewModel updatedInvestigation)
+        {
+            try
+            {
+                var modelToUpdateInv = _bloggyRepository.GetInvestigationById(id);
+                var modelToUpdateReport = _bloggyRepository.GetBlogPostById(modelToUpdateInv.BlogPostId);
+                if (modelToUpdateInv == null)
+                {
+                    return NotFound();
+                }
+
+                //Check if the current user has access to this resource
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (modelToUpdateInv.User.Id == currentUser.Id)
+                {
+                    if (ModelState.IsValid)
+                    {
+
+                        modelToUpdateInv.DescriptionOfInvestigation = updatedInvestigation.DescriptionOfInvestigation;
+                        
+                        _bloggyRepository.UpdateInvestigation(modelToUpdateInv);
+
+                        modelToUpdateReport.StatusId = updatedInvestigation.StatusId;
+                        _bloggyRepository.UpdateBlogPost(modelToUpdateReport);
+
+                        return RedirectToAction("Index");
+                    }
+                    else
+                        return Unauthorized(); //or redirect to error controller with 401/403 actions
+                }
+                else
+                {
+                  
+
+                    //Load all categories and create a list of CategoryViewModel
+                    var statusList = _bloggyRepository.GetAllStatus().Select(c => new StatusViewModel()
+                    {
+                        Id = c.Id,
+                        Name = c.Name
+                    }).ToList();
+
+                    //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CategoryId
+                    updatedInvestigation.StatusList = statusList;
+
+                    return View(updatedInvestigation);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message, ex.Data);
+                return View("Error");
+            }
+        }
+    }
 }

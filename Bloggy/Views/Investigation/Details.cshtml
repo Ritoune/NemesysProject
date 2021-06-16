@@ -1,0 +1,25 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<Bloggy.Models.ApplicationUser> UserManager
+
+
+@model Bloggy.ViewModels.InvestigationViewModel
+
+<h1>@Model.BlogPost.Title</h1>
+<div class="card" style="width: 90%;padding:20px; margin:20px;">
+    <img class="card-img-top" src="@Model.BlogPost.ImageUrl" alt="Image for @Model.BlogPost.Title" />
+    <div class="card-body">
+        <h3 class="card-title">@Model.BlogPost.Title</h3>
+        <p class="small">Type of hazard : @Model.BlogPost.Category.Name</p>
+        <p class="small">Status : @Model.BlogPost.Status.Name</p>
+        <p class="small">Location : @Model.BlogPost.Location </p>
+        <p class="small">Spotted Date : @Model.BlogPost.SpottedDate</p>
+        <p class="small">Created Date : @Model.BlogPost.CreatedDate</p>
+        <p class="small">Description Of Investigation : @Model.DescriptionOfInvestigation</p>
+        <p class="small">DateOfAction : @Model.DateOfAction</p>
+        <p class="small">By @Model.Author.Name</p>
+    </div>
+</div>
+
+<a asp-controller="Investigation" asp-action="Index" class="btn btn-primary">Back to list</a>
+<a asp-controller="Investigation" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit investigation</a>
+

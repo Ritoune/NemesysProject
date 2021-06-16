@@ -15,11 +15,11 @@ namespace Bloggy.ViewModels
         [Display(Name = "Description of investigation")]
         public string DescriptionOfInvestigation { get; set; }
         //[Display(Name = "Spotted Date :")]
-        //public DateTime DateOfAction { get; set; }
+        public DateTime DateOfAction { get; set; }
         //[Required(ErrorMessage = "Report description is required")]
         //[StringLength(1500, ErrorMessage = "Report description cannot be longer than 1500 characters")]
         //[Display(Name = "Description")]
-        //public string UserId { get; set; }
+        public string UserId { get; set; }
         public int BlogPostId { get; set; }
         //Property used to bind user selection
         [Required(ErrorMessage = "Status is required")]

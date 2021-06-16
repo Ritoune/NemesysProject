@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bloggy.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace Bloggy.ViewModels
         public DateTime DateOfAction { get; set; }
         public string UserId { get; set; }
         public int BlogPostId { get; set; }
+        //public BlogPost Post { get; set; }
         public BlogPostViewModel BlogPost { get; set; }
         public AuthorViewModel Author { get; set; }
     }
