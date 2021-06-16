@@ -1,0 +1,36 @@
+﻿@model Bloggy.ViewModels.EditInvestigationViewModel
+ 
+
+<h2>Create Investigation</h2>
+
+<form asp-action="Create" method="post" role="form" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="DescriptionOfInvestigation" class="col-md-2"></label>
+        <div class="col-md-5">
+            <textarea asp-for="DescriptionOfInvestigation" class="form-control"></textarea>
+            <span asp-validation-for="DescriptionOfInvestigation" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="StatusId" class="col-md-2"></label>
+        <div class="col-md-5">
+            <select asp-for="StatusId"
+                    asp-items="@(new SelectList(Model.StatusList,"Id","Name"))">
+                <option value="">Select a type of hazard</option>
+            </select>
+            <span asp-validation-for="StatusId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-5">
+            <input type="submit" class="btn btn-primary" value="Create Investigation" />
+            <a asp-controller="Investigation" asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+

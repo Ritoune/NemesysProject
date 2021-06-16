@@ -8,6 +8,11 @@ namespace Bloggy.Models.Interfaces
     public interface IBloggyRepository
     {
         IEnumerable<BlogPost> GetAllBlogPosts();
+        public IEnumerable<Investigation> GetAllInvestigations();
+        public Investigation GetInvestigationById(int investigationId);
+        public void CreateInvestigation(Investigation investigation);
+        public void UpdateInvestigation(Investigation investigation);
+
         IEnumerable<BlogPost> GetAllBlogPostsForStatus();
         BlogPost GetBlogPostById(int blogPostId);
         BlogPost GetBlogPostByIdForStatus(int blogPostId);

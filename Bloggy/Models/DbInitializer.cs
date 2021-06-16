@@ -100,15 +100,15 @@ namespace Bloggy.Models
                     {
                         Name = "Opened"
                     },
-                    new Category()
+                    new Status()
                     {
                         Name = "Closed"
                     },
-                    new Category()
+                    new Status()
                     {
                         Name = "Being investigating"
                     },
-                    new Category()
+                    new Status()
                     {
                         Name = "No action required"
                     }
@@ -135,7 +135,7 @@ namespace Bloggy.Models
                         SpottedDate = DateTime.UtcNow,
                         ImageUrl = "/images/seed1.jpg",
                         CategoryId = 1,
-                        StatusId = 1,
+                        StatusId = 6,
                         UserId = user.Id,
                         Location = "In the parking",
                     },
@@ -147,8 +147,8 @@ namespace Bloggy.Models
                         UpdatedDate = DateTime.UtcNow.AddDays(-1),
                         SpottedDate = DateTime.UtcNow.AddDays(-1),
                         ImageUrl = "/images/seed2.jpg",
-                        CategoryId = 2,
-                        StatusId = 1,
+                        CategoryId = 1,
+                        StatusId = 6,
                         UserId = user.Id,
                         Location = "At the entrance",
                     },
@@ -161,7 +161,7 @@ namespace Bloggy.Models
                         SpottedDate = DateTime.UtcNow.AddDays(-2),
                         ImageUrl = "/images/seed3.jpg",
                         CategoryId = 2,
-                        StatusId = 1,
+                        StatusId = 6,
                         UserId = user.Id,
                         Location = "In the library",
                     }

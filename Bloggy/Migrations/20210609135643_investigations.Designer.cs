@@ -96,8 +96,7 @@ namespace Bloggy.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                   
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
@@ -117,8 +116,7 @@ namespace Bloggy.Migrations
                     b.Property<DateTime>("SpottedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("StatusId")
-                        .HasColumnType("int");
+
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -131,29 +129,15 @@ namespace Bloggy.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
 
-                    b.HasIndex("StatusId");
+
 
                     b.HasIndex("UserId");
 
                     b.ToTable("BlogPosts");
                 });
 
-            modelBuilder.Entity("Bloggy.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-                });
+           
 
             modelBuilder.Entity("Bloggy.Models.Investigation", b =>
                 {
@@ -183,20 +167,7 @@ namespace Bloggy.Migrations
                     b.ToTable("Investigations");
                 });
 
-            modelBuilder.Entity("Bloggy.Models.Status", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Status");
-                });
+            
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -335,25 +306,16 @@ namespace Bloggy.Migrations
 
             modelBuilder.Entity("Bloggy.Models.BlogPost", b =>
                 {
-                    b.HasOne("Bloggy.Models.Category", "Category")
-                        .WithMany("BlogPosts")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                   
 
-                    b.HasOne("Bloggy.Models.Status", "Status")
-                        .WithMany("BlogPosts")
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.HasOne("Bloggy.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
-                    b.Navigation("Category");
+                    
 
-                    b.Navigation("Status");
+
 
                     b.Navigation("User");
                 });
@@ -426,15 +388,9 @@ namespace Bloggy.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Bloggy.Models.Category", b =>
-                {
-                    b.Navigation("BlogPosts");
-                });
+           
 
-            modelBuilder.Entity("Bloggy.Models.Status", b =>
-                {
-                    b.Navigation("BlogPosts");
-                });
+           
 #pragma warning restore 612, 618
         }
     }

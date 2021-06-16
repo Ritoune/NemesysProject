@@ -28,8 +28,7 @@ namespace Bloggy.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                   
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
@@ -59,41 +58,17 @@ namespace Bloggy.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                
 
                     b.ToTable("BlogPosts");
                 });
 
-            modelBuilder.Entity("Bloggy.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+          
+                
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("Bloggy.Models.BlogPost", b =>
-                {
-                    b.HasOne("Bloggy.Models.Category", "Category")
-                        .WithMany("BlogPosts")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("Bloggy.Models.Category", b =>
-                {
-                    b.Navigation("BlogPosts");
-                });
+           
 #pragma warning restore 612, 618
         }
     }

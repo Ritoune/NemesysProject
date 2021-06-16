@@ -34,10 +34,27 @@ namespace Bloggy.Models.Repositories
                 //Using Eager loading with Include
                 //var app = _appDbContext.BlogPosts.Include(b => b.Category).OrderBy(b => b.CreatedDate);
                 //return app.Include(b => b.Category).OrderBy(b => b.CreatedDate);
-                return _appDbContext.BlogPosts.Include(b => b.Category).OrderBy(b => b.CreatedDate);
+                return _appDbContext.BlogPosts.Include(b => b.Category).Include(b => b.Status).OrderBy(b => b.CreatedDate);
                 //return _appDbContext.BlogPosts.Include(b => b.Status).OrderBy(b => b.CreatedDate);
             }
             catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+        }
+
+        public IEnumerable<Investigation> GetAllInvestigations()
+        {
+            try
+            {
+                //Using Eager loading with Include
+                //var app = _appDbContext.BlogPosts.Include(b => b.Category).OrderBy(b => b.CreatedDate);
+                //return app.Include(b => b.Category).OrderBy(b => b.CreatedDate);
+                return _appDbContext.Investigations.Include(b => b.BlogPost).Include(b => b.BlogPost.Status).Include(b => b.BlogPost.Category).OrderBy(b => b.DateOfAction);
+                //return _appDbContext.BlogPosts.Include(b => b.Status).OrderBy(b => b.CreatedDate);
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 throw;
@@ -65,8 +82,23 @@ namespace Bloggy.Models.Repositories
             try
             {
                 //Using Eager loading with Include
-                return _appDbContext.BlogPosts.Include(b => b.Category).Include(b => b.User).FirstOrDefault(p => p.Id == blogPostId);
+                return _appDbContext.BlogPosts.Include(b => b.Category).Include(b => b.Status).Include(b => b.User).FirstOrDefault(p => p.Id == blogPostId);
                // return _appDbContext.BlogPosts.Include(b => b.Status).Include(b => b.User).FirstOrDefault(p => p.Id == blogPostId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+        }
+
+        public Investigation GetInvestigationById(int investigationId)
+        {
+            try
+            {
+                //Using Eager loading with Include
+                return _appDbContext.Investigations.Include(b => b.BlogPost).Include(b => b.BlogPost.Status).Include(b => b.BlogPost.Category).Include(b => b.User).FirstOrDefault(p => p.Id == investigationId);
+                // return _appDbContext.BlogPosts.Include(b => b.Status).Include(b => b.User).FirstOrDefault(p => p.Id == blogPostId);
             }
             catch (Exception ex)
             {
@@ -104,6 +136,20 @@ namespace Bloggy.Models.Repositories
             }
         }
 
+        public void CreateInvestigation(Investigation investigation)
+        {
+            try
+            {
+                _appDbContext.Investigations.Add(investigation);
+                _appDbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+        }
+
         public void UpdateBlogPost(BlogPost blogPost)
         {
             try
@@ -121,6 +167,27 @@ namespace Bloggy.Models.Repositories
                     existingBlogPost.Location = blogPost.Location;
 
                     _appDbContext.Entry(existingBlogPost).State = EntityState.Modified;
+                    _appDbContext.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+        }
+
+        public void UpdateInvestigation(Investigation investigation)
+        {
+            try
+            {
+                var existingInvestigation = _appDbContext.Investigations.SingleOrDefault(bp => bp.Id == investigation.Id);
+                if (existingInvestigation != null)
+                {
+                    existingInvestigation.DescriptionOfInvestigation = investigation.DescriptionOfInvestigation;
+                   // existingInvestigation.DateOfAction = investigation.DateOfAction;
+
+                    _appDbContext.Entry(existingInvestigation).State = EntityState.Modified;
                     _appDbContext.SaveChanges();
                 }
             }

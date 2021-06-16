@@ -56,11 +56,11 @@ namespace Bloggy.Contollers
                             Id = b.Category.Id,
                             Name = b.Category.Name
                         },
-                        //Status = new StatusViewModel()
-                        //{
-                            //Id = b.Status.Id,
-                            //Name = b.Status.Name
-                        //},
+                        Status = new StatusViewModel()
+                        {
+                            Id = b.Status.Id,
+                            Name = b.Status.Name
+                        },
                         Location = b.Location,
                         Author = new AuthorViewModel()
                         {
@@ -69,21 +69,6 @@ namespace Bloggy.Contollers
                         },
 
                     }),
-                    
-                    BlogPostsForStatus = _bloggyRepository
-                    .GetAllBlogPostsForStatus()
-                    .OrderByDescending(b => b.CreatedDate)
-                    .Select(b => new BlogPostViewModel
-                    {
-                        
-                        Status = new StatusViewModel()
-                        {
-                        Id = b.Status.Id,
-                        Name = b.Status.Name
-                        },
-                })
-
-
                 };
                 return View(model);
             }
@@ -117,11 +102,11 @@ namespace Bloggy.Contollers
                             Id = post.Category.Id,
                             Name = post.Category.Name
                         },
-                        //Status = new StatusViewModel()
-                        //{
-                        ////Id = post.Status.Id,
-                        //Name = post.Status.Name
-                        //},
+                        Status = new StatusViewModel()
+                        {
+                            Id = post.Status.Id,
+                            Name = post.Status.Name
+                        },
                         Location = post.Location,
                         Author = new AuthorViewModel()
                         {
@@ -130,14 +115,14 @@ namespace Bloggy.Contollers
                         }
 
                     };
-                    post = _bloggyRepository.GetBlogPostByIdForStatus(id);
+                    /* post = _bloggyRepository.GetBlogPostByIdForStatus(id);
                     {
                         model.Status = new StatusViewModel()
                         {
                             Id = post.Status.Id,
                             Name = post.Status.Name
                         };
-                    }
+                    }*/
 
                     return View(model);
                 }
@@ -181,7 +166,7 @@ namespace Bloggy.Contollers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Create([Bind("Title, Content, ImageToUpload, CategoryId, Location, StatusId, SpottedDate")] EditBlogPostViewModel newBlogPost)
+        public IActionResult Create([Bind("Title, Content, ImageToUpload, Location, StatusId, SpottedDate, CategoryId")] EditBlogPostViewModel newBlogPost)
         {
             try
             {
@@ -201,6 +186,7 @@ namespace Bloggy.Contollers
                         }
                     }
 
+
                     BlogPost blogPost = new BlogPost()
                     {
                         Title = newBlogPost.Title,
@@ -209,7 +195,7 @@ namespace Bloggy.Contollers
                         SpottedDate = DateTime.UtcNow,
                         ImageUrl = "/images/blogposts/" + fileName,
                         ReadCount = 0,
-                        StatusId = 1,
+                        StatusId = 6,
                         CategoryId = newBlogPost.CategoryId,
                         Location = newBlogPost.Location,
                         UserId = _userManager.GetUserId(User)
@@ -235,6 +221,8 @@ namespace Bloggy.Contollers
                         Id = c.Id,
                         Name = c.Name
                     }).ToList();
+
+                    newBlogPost.StatusList = statusList;
 
                     return View(newBlogPost);
                 }
@@ -334,43 +322,6 @@ namespace Bloggy.Contollers
 
                         return View(model);
                     }
-                    /*if (User.IsInRole("Administrator"))
-                    {
-                        EditBlogPostViewModel model = new EditBlogPostViewModel()
-                        {
-                            Id = existingBlogPost.Id,
-                            Title = existingBlogPost.Title,
-                            Content = existingBlogPost.Content,
-                            SpottedDate = existingBlogPost.SpottedDate,
-                            ImageUrl = existingBlogPost.ImageUrl,
-                            CategoryId = existingBlogPost.CategoryId,
-                            Location = existingBlogPost.Location,
-                            StatusId = existingBlogPost.StatusId,
-
-                        };
-
-                        //Load all categories and create a list of CategoryViewModel
-                        var categoryList = _bloggyRepository.GetAllCategories().Select(c => new CategoryViewModel()
-                        {
-                            Id = c.Id,
-                            Name = c.Name
-                        }).ToList();
-
-                        //Attach to view model - view will pre-select according to the value in CategoryId
-                        model.CategoryList = categoryList;
-
-                        //Load all categories and create a list of CategoryViewModel
-                        var statusList = _bloggyRepository.GetAllStatus().Select(c => new StatusViewModel()
-                        {
-                            Id = c.Id,
-                            Name = c.Name
-                        }).ToList();
-
-                        //Attach to view model - view will pre-select according to the value in CategoryId
-                        model.StatusList = statusList;
-
-                        return View(model);
-                    }*/
                     else
                         return Unauthorized();
                 }

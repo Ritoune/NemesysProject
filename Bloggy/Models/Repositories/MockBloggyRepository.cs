@@ -12,6 +12,7 @@ namespace Bloggy.Models.Repositories
         private List<BlogPost> _posts;
         private List<Category> _categories;
         private List<Status> _status;
+        private List<Investigation> _investigations;
 
         public MockBloggyRepository()
         {
@@ -125,8 +126,20 @@ namespace Bloggy.Models.Repositories
             foreach (var post in _posts)
             {
                 post.Category = _categories.FirstOrDefault(c => c.Id == post.CategoryId);
-                //post.Status = _status.FirstOrDefault(c => c.Id == post.StatusId);
+                post.Status = _status.FirstOrDefault(c => c.Id == post.StatusId);
                 result.Add(post);
+            }
+            return result;
+        }
+
+        public IEnumerable<Investigation> GetAllInvestigations()
+        {
+            List<Investigation> result = new List<Investigation>();
+            foreach (var investigation in _investigations)
+            {
+                investigation.BlogPost = _posts.FirstOrDefault(c => c.Id == investigation.BlogPostId);
+                //investigation.Status = _status.FirstOrDefault(c => c.Id == investigation.StatusId);
+                result.Add(investigation);
             }
             return result;
         }
@@ -136,7 +149,7 @@ namespace Bloggy.Models.Repositories
             List<BlogPost> result = new List<BlogPost>();
             foreach (var post in _posts)
             {
-                //post.Category = _categories.FirstOrDefault(c => c.Id == post.CategoryId);
+                post.Category = _categories.FirstOrDefault(c => c.Id == post.CategoryId);
                 post.Status = _status.FirstOrDefault(c => c.Id == post.StatusId);
                 result.Add(post);
             }
@@ -148,7 +161,17 @@ namespace Bloggy.Models.Repositories
             var post = _posts.FirstOrDefault(p => p.Id == blogPostId); //if not found, it returns null
             var category = _categories.FirstOrDefault(c => c.Id == post.CategoryId);
             post.Category = category;
+            var status = _status.FirstOrDefault(c => c.Id == post.StatusId);
+            post.Status = status;
             return post;
+        }
+
+        public Investigation GetInvestigationById(int investigationId)
+        {
+            var investigation = _investigations.FirstOrDefault(p => p.Id == investigationId); //if not found, it returns null
+            var blogpost = _posts.FirstOrDefault(c => c.Id == investigation.BlogPostId);
+            investigation.BlogPost = blogpost;
+            return investigation;
         }
 
         public BlogPost GetBlogPostByIdForStatus(int blogPostId)
@@ -163,6 +186,12 @@ namespace Bloggy.Models.Repositories
         {
             blogPost.Id = _posts.Count + 1;
             _posts.Add(blogPost);
+        }
+
+        public void CreateInvestigation(Investigation investigation)
+        {
+            investigation.Id = _investigations.Count + 1;
+            _investigations.Add(investigation);
         }
 
         public void UpdateBlogPost(BlogPost blogPost)
@@ -180,6 +209,17 @@ namespace Bloggy.Models.Repositories
                 existingBlogPost.StatusId = blogPost.StatusId;
                 existingBlogPost.UserId = blogPost.UserId;
                 existingBlogPost.Location = blogPost.Location;
+            }
+        }
+
+        public void UpdateInvestigation(Investigation investigation)
+        {
+            var existingInvestigation = _investigations.FirstOrDefault(p => p.Id == investigation.Id);
+            if (existingInvestigation!= null)
+            {
+                //No need to update CreatedDate (id of course won't be changed)
+                existingInvestigation.DescriptionOfInvestigation = investigation.DescriptionOfInvestigation;
+                //existingInvestigation.DateOfAction = investigation.DateOfAction;
             }
         }
 
