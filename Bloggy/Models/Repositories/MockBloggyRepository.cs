@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Bloggy.Models.Interfaces;
+using Bloggy.ViewModels;
 
 namespace Bloggy.Models.Repositories
 {
@@ -14,6 +15,7 @@ namespace Bloggy.Models.Repositories
         private List<Status> _status;
         private List<Investigation> _investigations;
         private List<Upvotes> _upvotes;
+        private List<ApplicationUser> _users;
 
         public MockBloggyRepository()
         {
@@ -283,5 +285,41 @@ namespace Bloggy.Models.Repositories
             upvote.Id = _upvotes.Count + 1;
             _upvotes.Add(upvote);
         }
+
+        public IEnumerable<HallOfFameViewModel> GetHallOfFames()
+        {
+            List<BlogPost> AllReports = new List<BlogPost>();
+            foreach (var post in _posts)
+            {
+                post.User = _users.FirstOrDefault(c => c.Id == post.UserId);
+                AllReports.Add(post);
+            }
+            //IEnumerable<BlogPost> AllReports = _posts.Include(b => b.User).Where(c => c.CreatedDate > DateTime.UtcNow.AddYears(-1));
+                IEnumerable<string> ListUsersId = AllReports.Select(d => d.UserId).Distinct();
+
+                List<HallOfFameViewModel> HallOfFames = new List<HallOfFameViewModel>();
+                foreach (var userId in ListUsersId)
+                {
+                    var HallOfFame = new HallOfFameViewModel()
+                    {
+                        UserId = userId,
+                        NumberOfReports = 0
+                    };
+                    HallOfFames.Add(HallOfFame);
+                }
+                foreach (var fame in HallOfFames)
+                {
+                    foreach (var report in AllReports)
+                    {
+                        if (report.UserId == fame.UserId)
+                        {
+                            fame.NumberOfReports += 1;
+                        }
+                    }
+                }
+                return HallOfFames;
+
+        }
     }
 }
+

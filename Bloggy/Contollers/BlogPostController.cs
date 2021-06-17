@@ -457,17 +457,27 @@ namespace Bloggy.Contollers
 
 
         [HttpGet]
-        [Authorize(Roles ="Administrator")]
-        public IActionResult Dashboard()
+        [Authorize]
+        public IActionResult HallOfFame()
         {
             try
             {
-                ViewBag.Title = "Bloggy Dashboard";
+                
 
-                var model = new BlogDashboardViewModel();
-                model.TotalRegisteredUsers = _userManager.Users.Count();
-                model.TotalEntries = _bloggyRepository.GetAllBlogPosts().Count();
-
+                var model = new HallOfFameListViewModel();
+                model = new HallOfFameListViewModel()
+                {
+                    HallOfFames = _bloggyRepository.GetHallOfFames().OrderByDescending(b=>b.NumberOfReports),
+                  
+                };
+                foreach(var fame in model.HallOfFames)
+                {
+                    fame.Author = new AuthorViewModel()
+                    {
+                        Id = fame.UserId,
+                        Name = (_userManager.FindByIdAsync(fame.UserId).Result != null) ? _userManager.FindByIdAsync(fame.UserId).Result.UserName : "Anonymous"
+                    };
+                }
                 return View(model);
             }
             catch (Exception ex)

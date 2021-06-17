@@ -1,4 +1,5 @@
 ﻿using Bloggy.Models.Interfaces;
+using Bloggy.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -337,5 +338,42 @@ namespace Bloggy.Models.Repositories
                 throw;
             }
         }
+        public IEnumerable<HallOfFameViewModel> GetHallOfFames()
+        {
+                try
+                {
+                    IEnumerable<BlogPost> AllReports = _appDbContext.BlogPosts.Include(b => b.User).Where(c => c.CreatedDate > DateTime.UtcNow.AddYears(-1));
+                    IEnumerable<string> ListUsersId = AllReports.Select(d => d.UserId).Distinct();
+
+                    List<HallOfFameViewModel> HallOfFames = new List<HallOfFameViewModel>();
+                    foreach(var userId in ListUsersId)
+                    {
+                        var HallOfFame = new HallOfFameViewModel()
+                        {
+                            UserId = userId,
+                            NumberOfReports = 0
+                        };
+                        HallOfFames.Add(HallOfFame);
+                    }
+                    foreach(var fame in HallOfFames)
+                    {
+                        foreach(var report in AllReports)
+                        {
+                            if(report.UserId==fame.UserId)
+                            {
+                                fame.NumberOfReports += 1;
+                            }
+                        }
+                    }
+                    return HallOfFames;
+
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message);
+                    throw;
+                }
+        }
     }
 }
+

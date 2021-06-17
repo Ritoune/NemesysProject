@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bloggy.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,6 +32,7 @@ namespace Bloggy.Models.Interfaces
 
         public Upvotes GetUpVoteByReportIdAndUserId(int reportId, string userId);
         public void CreateUpVote(Upvotes upvote);
+        public IEnumerable<HallOfFameViewModel> GetHallOfFames();
     }
 
 }
