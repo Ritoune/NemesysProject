@@ -135,7 +135,7 @@ namespace Bloggy.Models
                         SpottedDate = DateTime.UtcNow,
                         ImageUrl = "/images/UnsafeAct3.jpg",
                         CategoryId = 1,
-                        StatusId = 6,
+                        StatusId = 1,
                         UserId = user.Id,
                         Location = "In the parking",
                         HasInvestigation = false
@@ -149,7 +149,7 @@ namespace Bloggy.Models
                         SpottedDate = DateTime.UtcNow.AddDays(-1),
                         ImageUrl = "/images/UnsafeAct2.jpg",
                         CategoryId = 1,
-                        StatusId = 6,
+                        StatusId = 1,
                         UserId = user.Id,
                         Location = "At the entrance",
                         HasInvestigation = false
@@ -163,7 +163,7 @@ namespace Bloggy.Models
                         SpottedDate = DateTime.UtcNow.AddDays(-2),
                         ImageUrl = "/images/UnsafeAct1.jpg",
                         CategoryId = 1,
-                        StatusId = 6,
+                        StatusId = 1,
                         UserId = user.Id,
                         Location = "In the library",
                         HasInvestigation = false
@@ -177,7 +177,7 @@ namespace Bloggy.Models
                         SpottedDate = DateTime.UtcNow.AddDays(-2),
                         ImageUrl = "/images/Condition1.jpg",
                         CategoryId = 2,
-                        StatusId = 6,
+                        StatusId = 1,
                         UserId = user.Id,
                         Location = "In the stadium",
                         HasInvestigation = false
@@ -191,7 +191,7 @@ namespace Bloggy.Models
                         SpottedDate = DateTime.UtcNow.AddDays(-2),
                         ImageUrl = "/images/Equipment1.jpg",
                         CategoryId = 3,
-                        StatusId = 6,
+                        StatusId = 1,
                         UserId = user.Id,
                         Location = "Classroom 404",
                         HasInvestigation = false
@@ -205,7 +205,7 @@ namespace Bloggy.Models
                         SpottedDate = DateTime.UtcNow.AddDays(-2),
                         ImageUrl = "/images/Structure 2.jpg",
                         CategoryId = 4,
-                        StatusId = 6,
+                        StatusId = 1,
                         UserId = user.Id,
                         Location = "In the stadium",
                         HasInvestigation = false
