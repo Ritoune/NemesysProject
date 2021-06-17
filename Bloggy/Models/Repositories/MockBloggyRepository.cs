@@ -123,6 +123,7 @@ namespace Bloggy.Models.Repositories
             };
         }
 
+        //This method return all reports
         public IEnumerable<BlogPost> GetAllBlogPosts()
         {
             List<BlogPost> result = new List<BlogPost>();
@@ -135,6 +136,7 @@ namespace Bloggy.Models.Repositories
             return result;
         }
 
+        //This method returns all investigations
         public IEnumerable<Investigation> GetAllInvestigations()
         {
             List<Investigation> result = new List<Investigation>();
@@ -147,18 +149,7 @@ namespace Bloggy.Models.Repositories
             return result;
         }
 
-        public IEnumerable<BlogPost> GetAllBlogPostsForStatus()
-        {
-            List<BlogPost> result = new List<BlogPost>();
-            foreach (var post in _posts)
-            {
-                post.Category = _categories.FirstOrDefault(c => c.Id == post.CategoryId);
-                post.Status = _status.FirstOrDefault(c => c.Id == post.StatusId);
-                result.Add(post);
-            }
-            return result;
-        }
-
+        //This method return the report corresponding to an id 
         public BlogPost GetBlogPostById(int blogPostId)
         {
             var post = _posts.FirstOrDefault(p => p.Id == blogPostId); //if not found, it returns null
@@ -169,6 +160,7 @@ namespace Bloggy.Models.Repositories
             return post;
         }
 
+        //This method returns the investigation corresponding to an id
         public Investigation GetInvestigationById(int investigationId)
         {
             var investigation = _investigations.FirstOrDefault(p => p.Id == investigationId); //if not found, it returns null
@@ -177,6 +169,7 @@ namespace Bloggy.Models.Repositories
             return investigation;
         }
 
+        //This method returns the investigation corresponding to a report id
         public Investigation GetInvestigationByIdReport(int ReportId)
          {
             var investigation = _investigations.FirstOrDefault(p => p.BlogPostId == ReportId); //if not found, it returns null
@@ -184,6 +177,7 @@ namespace Bloggy.Models.Repositories
             return investigation;
         }
 
+        //This method deletes an investigation from an investigation id
         public void DeleteInvestigationById(int id)
         {
             var investigation = _investigations.FirstOrDefault(p => p.Id == id); //if not found, it returns null
@@ -191,6 +185,8 @@ namespace Bloggy.Models.Repositories
             _investigations.Remove(investigation);
         }
 
+
+        //This methode deletes a report
         public void DeleteReport(BlogPost post)
         {
             if (post.HasInvestigation == false)
@@ -205,26 +201,22 @@ namespace Bloggy.Models.Repositories
             }
         }
 
-        public BlogPost GetBlogPostByIdForStatus(int blogPostId)
-        {
-            var post = _posts.FirstOrDefault(p => p.Id == blogPostId); //if not found, it returns null
-            var status = _status.FirstOrDefault(c => c.Id == post.StatusId);
-            post.Status = status;
-            return post;
-        }
 
+        //This methodes creates a report
         public void CreateBlogPost(BlogPost blogPost)
         {
             blogPost.Id = _posts.Count + 1;
             _posts.Add(blogPost);
         }
 
+        //This method creates an investigation
         public void CreateInvestigation(Investigation investigation)
         {
             investigation.Id = _investigations.Count + 1;
             _investigations.Add(investigation);
         }
 
+        //This method updates a report
         public void UpdateBlogPost(BlogPost blogPost)
         {
             var existingBlogPost = _posts.FirstOrDefault(p => p.Id == blogPost.Id);
@@ -243,6 +235,7 @@ namespace Bloggy.Models.Repositories
             }
         }
 
+        //This method updates an investigation
         public void UpdateInvestigation(Investigation investigation)
         {
             var existingInvestigation = _investigations.FirstOrDefault(p => p.Id == investigation.Id);
@@ -254,38 +247,44 @@ namespace Bloggy.Models.Repositories
             }
         }
 
-
+        //This method return all categories
         public IEnumerable<Category> GetAllCategories()
         {
             return _categories;
         }
 
+        //This method returns all status
         public IEnumerable<Status> GetAllStatus()
         {
             return _status;
         }
 
+        //This method returns a category corresponding to a catgory id
         public Category GetCategoryById(int categoryId)
         {
             return _categories.FirstOrDefault(c => c.Id == categoryId); //if not found, it returns null
         }
 
+        //This method returns the status corresponding to a status id
         public Status GetStatusById(int statusId)
         {
             return _status.FirstOrDefault(c => c.Id == statusId); //if not found, it returns null
         }
 
+        //This method returns an upvote corresponding to a report id and a user id
         public Upvotes GetUpVoteByReportIdAndUserId(int reportId, string userId)
         {
             return _upvotes.FirstOrDefault(c => c.BlogPostId == reportId && c.UserId == userId); //if not found, it returns null
         }
 
+        //This method creates an upvote
         public void CreateUpVote(Upvotes upvote)
         {
             upvote.Id = _upvotes.Count + 1;
             _upvotes.Add(upvote);
         }
 
+        //This methods return all data for the Hall Of Fame
         public IEnumerable<HallOfFameViewModel> GetHallOfFames()
         {
             List<BlogPost> AllReports = new List<BlogPost>();
