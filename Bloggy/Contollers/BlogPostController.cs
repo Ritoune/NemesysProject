@@ -31,11 +31,12 @@ namespace Bloggy.Contollers
             _logger = logger;
         }
 
-
+        //This action displays all reports when you click on "Reports".
         public IActionResult Index()
         {
             try
             {
+                //Creation of a new BlogPostListViewModel, which contains all reports, and that will be displayed
                 var model = new BlogPostListViewModel()
                 {
                     TotalEntries = _bloggyRepository.GetAllBlogPosts().Count(),
@@ -80,11 +81,14 @@ namespace Bloggy.Contollers
             }
         }
 
+        //This action displays all the informations about a report, when you click on Details 
         public IActionResult Details(int id)
         {
             try
             {
+                //Creation of variable which contains a report and all of his informations
                 var post = _bloggyRepository.GetBlogPostById(id);
+
                 // Verify if he already Like the post or not
                 var getUpVote = _bloggyRepository.GetUpVoteByReportIdAndUserId(id, _userManager.GetUserId(User));
                 bool existingUpVote = false;
@@ -92,10 +96,14 @@ namespace Bloggy.Contollers
                 {
                     existingUpVote = true;
                 }
+
+                //If there is no corresponding report, it displays a view of error
                 if (post == null)
                     return NotFound();
+                //
                 else
                 {
+                    //Creation of a new BlogPostViewModel, which contains all the informations about a report 
                     var model = new BlogPostViewModel()
                     {
                         Id = post.Id,
@@ -125,14 +133,6 @@ namespace Bloggy.Contollers
                         }
 
                     };
-                    /* post = _bloggyRepository.GetBlogPostByIdForStatus(id);
-                    {
-                        model.Status = new StatusViewModel()
-                        {
-                            Id = post.Status.Id,
-                            Name = post.Status.Name
-                        };
-                    }*/
 
                     return View(model);
                 }
@@ -145,6 +145,7 @@ namespace Bloggy.Contollers
 
         }
 
+        //This action creates all informations we need to display the Create View
         [HttpGet]
         [Authorize]
         public IActionResult Create()
@@ -174,6 +175,8 @@ namespace Bloggy.Contollers
             }
         }
 
+        //This action creates a new report with the informations chosen by the user in the view BlogPost/Create.cshtml
+        //In Bind : all parameters that will change during the creation of the report 
         [HttpPost]
         [Authorize]
         public IActionResult Create([Bind("Title, Content, ImageToUpload, Location, StatusId, SpottedDate, CategoryId, HasInvestigation")] EditBlogPostViewModel newBlogPost)
@@ -182,11 +185,10 @@ namespace Bloggy.Contollers
             {
                 if (ModelState.IsValid)
                 {
+                    //This part is used for the display of the picture
                     string fileName = "";
                     if (newBlogPost.ImageToUpload != null)
                     {
-                        //At this point you should check size, extension etc...
-                        //Then persist using a new name for consistency (e.g. new Guid)
                         var extension = "." + newBlogPost.ImageToUpload.FileName.Split('.')[newBlogPost.ImageToUpload.FileName.Split('.').Length - 1];
                         fileName = Guid.NewGuid().ToString() + extension;
                         var path = Directory.GetCurrentDirectory() + "\\wwwroot\\images\\blogposts\\" + fileName;
@@ -196,7 +198,7 @@ namespace Bloggy.Contollers
                         }
                     }
 
-
+                    //Creation of a new entity BlogPost with all his informations
                     BlogPost blogPost = new BlogPost()
                     {
                         Title = newBlogPost.Title,
@@ -212,7 +214,10 @@ namespace Bloggy.Contollers
                         HasInvestigation = false
                     };
 
+                    //Creation of the report
                     _bloggyRepository.CreateBlogPost(blogPost);
+
+                    //View "Index"
                     return RedirectToAction("Index");
                 }
                 else
@@ -224,15 +229,17 @@ namespace Bloggy.Contollers
                         Name = c.Name
                     }).ToList();
 
-                    //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CategoryId
+                    //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CategoryId)
                     newBlogPost.CategoryList = categoryList;
 
+                    //Load all status and create a list of StatusViewModel
                     var statusList = _bloggyRepository.GetAllStatus().Select(c => new StatusViewModel()
                     {
                         Id = c.Id,
                         Name = c.Name
                     }).ToList();
 
+                    //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the StatusId)
                     newBlogPost.StatusList = statusList;
 
                     return View(newBlogPost);
@@ -264,17 +271,17 @@ namespace Bloggy.Contollers
                         Name = c.Name
                     }).ToList();
 
-                    //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CategoryId
+                    //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CategoryId)
                     newBlogPost.CategoryList = categoryList;
 
-                    //Load all categories and create a list of CategoryViewModel
+                    //Load all status and create a list of StatusViewModel
                     var statusList = _bloggyRepository.GetAllStatus().Select(c => new StatusViewModel()
                     {
                         Id = c.Id,
                         Name = c.Name
                     }).ToList();
 
-                    //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CategoryId
+                    //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the StatusId)
                     newBlogPost.StatusList = statusList;
                 }
 
@@ -287,12 +294,14 @@ namespace Bloggy.Contollers
             }
         }
 
+        //This action loads all informations we need to edit a report 
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             try
             {
+                //Creation of a variable which contains a report 
                 var existingBlogPost = _bloggyRepository.GetBlogPostById(id);
                 if (existingBlogPost != null)
                 {
@@ -322,14 +331,14 @@ namespace Bloggy.Contollers
                         //Attach to view model - view will pre-select according to the value in CategoryId
                         model.CategoryList = categoryList;
 
-                        //Load all categories and create a list of CategoryViewModel
+                        //Load all status and create a list of StatusViewModel
                         var statusList = _bloggyRepository.GetAllStatus().Select(c => new StatusViewModel()
                         {
                             Id = c.Id,
                             Name = c.Name
                         }).ToList();
 
-                        //Attach to view model - view will pre-select according to the value in CategoryId
+                        //Attach to view model - view will pre-select according to the value in StatusId)
                         model.StatusList = statusList;
 
                         return View(model);
@@ -347,12 +356,14 @@ namespace Bloggy.Contollers
             }
         }
 
+        //This action edits a report with all informations chosen by the user in the view BlogPost/Edit.cshtml
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([FromRoute] int id, [Bind("Id, Title, Content, ImageToUpload, CategoryId, Location, SpottedDate")] EditBlogPostViewModel updatedBlogPost)
         {
             try {
+                //Creation of a variable which contains all previous informations about the report 
                 var modelToUpdate = _bloggyRepository.GetBlogPostById(id);
                 if (modelToUpdate == null)
                 {
@@ -365,7 +376,7 @@ namespace Bloggy.Contollers
                 {
                     if (ModelState.IsValid)
                     {
-
+                        //Display picture
                         string imageUrl = "";
 
                         if (updatedBlogPost.ImageToUpload != null)
@@ -385,6 +396,7 @@ namespace Bloggy.Contollers
                         else
                             imageUrl = modelToUpdate.ImageUrl;
 
+                        //Informations update
                         modelToUpdate.Title = updatedBlogPost.Title;
                         modelToUpdate.Content = updatedBlogPost.Content;
                         modelToUpdate.ImageUrl = imageUrl;
@@ -394,6 +406,7 @@ namespace Bloggy.Contollers
                         modelToUpdate.UserId = _userManager.GetUserId(User);
                         modelToUpdate.Location = updatedBlogPost.Location;
 
+                        //Edit report
                         _bloggyRepository.UpdateBlogPost(modelToUpdate);
 
                         return RedirectToAction("Index");
@@ -413,14 +426,14 @@ namespace Bloggy.Contollers
                     //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CategoryId
                     updatedBlogPost.CategoryList = categoryList;
 
-                    //Load all categories and create a list of CategoryViewModel
+                    //Load all status and create a list of StatusViewModel
                     var statusList = _bloggyRepository.GetAllStatus().Select(c => new StatusViewModel()
                     {
                         Id = c.Id,
                         Name = c.Name
                     }).ToList();
 
-                    //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CategoryId
+                    //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the StatusId)
                     updatedBlogPost.StatusList = statusList;
 
                     return View(updatedBlogPost);
@@ -433,28 +446,7 @@ namespace Bloggy.Contollers
             }
         }
 
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> Delete(int id)
-        {
-            Console.Clear();
-            if (id == null)
-            {
-                Console.WriteLine(id);
-                return NotFound();
-            }
-
-            var report = _bloggyRepository.GetBlogPostById(id);
-            if (report == null)
-            {
-                return RedirectToAction("Index");
-            }
-
-            return View(report);
-        }
-
-        // POST: Movies/Delete/5
-
+        //This action deletes a report 
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var report = _bloggyRepository.GetBlogPostById(id);
@@ -463,7 +455,7 @@ namespace Bloggy.Contollers
             return RedirectToAction("Index");
         }
 
-
+        //This action creates the Hall Of Fame table 
         [HttpGet]
         [Authorize]
         public IActionResult HallOfFame()
@@ -471,13 +463,14 @@ namespace Bloggy.Contollers
             try
             {
                 
-
+                //creation a variable HallOfFameListViewModel which contains all lines of the table 
                 var model = new HallOfFameListViewModel();
                 model = new HallOfFameListViewModel()
                 {
                     HallOfFames = _bloggyRepository.GetHallOfFames().OrderByDescending(b=>b.NumberOfReports),
                   
                 };
+                //Creation of the Author of each line from de table Hall Of Fame
                 foreach(var fame in model.HallOfFames)
                 {
                     fame.Author = new AuthorViewModel()
@@ -495,6 +488,7 @@ namespace Bloggy.Contollers
             }
         }
 
+        //This action gives to the user the possibility to upvote only one time a report 
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> UpVote(int id)
@@ -509,6 +503,7 @@ namespace Bloggy.Contollers
                     return NotFound();
                 }
 
+                //if the user didn't yet upvoted this report, he can upvotes
                 if (existingUpVote == null)
                 {
                     int NumberOfVote = reportToUpdate.Votes;
@@ -516,12 +511,14 @@ namespace Bloggy.Contollers
                     reportToUpdate.Votes += 1;
                     _bloggyRepository.UpdateBlogPost(reportToUpdate);
 
+                    //creation of a new entity Upvotes
                     Upvotes upvote = new Upvotes()
                     {
                         BlogPostId = id,
                         UserId = _userManager.GetUserId(User)
                     };
 
+                    //Creation of the upvote in the global context
                     _bloggyRepository.CreateUpVote(upvote);
                 }
 
