@@ -85,6 +85,13 @@ namespace Bloggy.Contollers
             try
             {
                 var post = _bloggyRepository.GetBlogPostById(id);
+                // Verify if he already Like the post or not
+                var getUpVote = _bloggyRepository.GetUpVoteByReportIdAndUserId(id, _userManager.GetUserId(User));
+                bool existingUpVote = false;
+                if (getUpVote != null)
+                {
+                    existingUpVote = true;
+                }
                 if (post == null)
                     return NotFound();
                 else
@@ -99,6 +106,7 @@ namespace Bloggy.Contollers
                         Title = post.Title,
                         Content = post.Content,
                         HasInvestigation = post.HasInvestigation,
+                        HasUpvote = existingUpVote,
                         Category = new CategoryViewModel()
                         {
                             Id = post.Category.Id,

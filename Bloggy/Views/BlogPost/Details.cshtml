@@ -27,12 +27,12 @@
         <a asp-controller="BlogPost" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a>
         <a asp-controller="BlogPost" asp-action="DeleteConfirmed" asp-route-id="@Model.Id" class="btn btn-primary">Delete</a>
     }
-    <a asp-controller="BlogPost" asp-action="UpVote" asp-route-id="@Model.Id" class="btn btn-primary">UpVote</a>
+    
 }
 
 @if (User.IsInRole("User"))
 {
-    if (@Model.HasInvestigation == false)
+    if (@Model.HasUpvote == false)
     {
 <a asp-controller="BlogPost" asp-action="UpVote" asp-route-id="@Model.Id" class="btn btn-primary">UpVote</a>
     }

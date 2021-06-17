@@ -18,6 +18,7 @@ namespace Bloggy.ViewModels
         public int CategoryId { get; set; }
         public string UserId { get; set; }
         public bool HasInvestigation { get; set; }
+        public bool HasUpvote { get; set; }
         public CategoryViewModel Category { get; set; }
         public StatusViewModel Status { get; set; }
 
