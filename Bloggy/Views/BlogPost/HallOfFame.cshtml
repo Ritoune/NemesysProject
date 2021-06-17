@@ -4,17 +4,21 @@
     ViewData["Title"] = "Hall Of Fame ";
 }
 
+<center>
 <h1>@ViewData["Title"]</h1>
+</center>
 
-<div class="row">
+<table border=" 1" , cellpadding="15" , align="center">
+    <tr>
+        <th>Reporter</th>
+        <th>Number Of Reports</th>
+    </tr>
     @foreach (var fame in Model.HallOfFames)
     {
-        <div class="card" style="width: 90%;padding:20px; margin:20px;">
-        
-            <div class="card-body">
-                <p class="small">Type of hazard : @fame.Author.Name</p>
-                <p class="small">Status : @fame.NumberOfReports.</p>
-            </div>
-        </div>
-        }
-</div>
+        <tr>
+            <td>@fame.Author.Name</td>
+            <td>@fame.NumberOfReports</td>
+        </tr>
+    }
+</table>
+
