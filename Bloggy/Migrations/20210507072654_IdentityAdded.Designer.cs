@@ -28,8 +28,7 @@ namespace Bloggy.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                    
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
@@ -46,31 +45,24 @@ namespace Bloggy.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+
+
                     b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("SpottedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
 
                     b.ToTable("BlogPosts");
                 });
 
-            modelBuilder.Entity("Bloggy.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-                });
-
+            
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -271,16 +263,7 @@ namespace Bloggy.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Bloggy.Models.BlogPost", b =>
-                {
-                    b.HasOne("Bloggy.Models.Category", "Category")
-                        .WithMany("BlogPosts")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
+            
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
@@ -333,10 +316,7 @@ namespace Bloggy.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Bloggy.Models.Category", b =>
-                {
-                    b.Navigation("BlogPosts");
-                });
+            
 #pragma warning restore 612, 618
         }
     }

@@ -13,56 +13,29 @@ namespace Bloggy.Migrations
             migrationBuilder.DropTable(
                 name: "Authors");
 
-            migrationBuilder.RenameColumn(
-                name: "AuthorId",
-                table: "BlogPosts",
-                newName: "CategoryId");
 
             migrationBuilder.RenameIndex(
                 name: "IX_BlogPosts_AuthorId",
                 table: "BlogPosts",
                 newName: "IX_BlogPosts_CategoryId");
 
-            migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
-                });
+            
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_BlogPosts_Categories_CategoryId",
-                table: "BlogPosts",
-                column: "CategoryId",
-                principalTable: "Categories",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+            
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_BlogPosts_Categories_CategoryId",
-                table: "BlogPosts");
+           
 
-            migrationBuilder.DropTable(
-                name: "Categories");
+
 
             migrationBuilder.RenameColumn(
                 name: "CategoryId",
                 table: "BlogPosts",
                 newName: "AuthorId");
 
-            migrationBuilder.RenameIndex(
-                name: "IX_BlogPosts_CategoryId",
-                table: "BlogPosts",
-                newName: "IX_BlogPosts_AuthorId");
+           
 
             migrationBuilder.CreateTable(
                 name: "Authors",

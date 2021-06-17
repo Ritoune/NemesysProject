@@ -10,6 +10,7 @@ namespace Bloggy.ViewModels
     {
         public int TotalEntries { get; set; }
         public IEnumerable<BlogPostViewModel> BlogPosts { get; set; }
+        public IEnumerable<BlogPostViewModel> BlogPostsForStatus { get; set; }
     }
 
 }

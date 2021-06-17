@@ -1,12 +1,12 @@
 ﻿@model Bloggy.ViewModels.BlogPostListViewModel
 
 @{
-    ViewData["Title"] = "Blog Posts";
+    ViewData["Title"] = "Reports";
 }
 
 <h1>@ViewData["Title"]</h1>
 
-<h2>Showing @Model.TotalEntries blog entries</h2>
+<h2>Showing @Model.TotalEntries Report entries</h2>
 
 <div class="row">
     @foreach (var blogPost in Model.BlogPosts)
@@ -15,7 +15,10 @@
             <img class="card-img-top" src="@blogPost.ImageUrl" alt="Image for @blogPost.Title" />
             <div class="card-body">
                 <h3 class="card-title">@blogPost.Title</h3>
-                <p class="small">@blogPost.CreatedDate.ToShortDateString() in @blogPost.Category.Name by @blogPost.Author.Name</p>
+                <p class="small">Spotted date : @blogPost.SpottedDate.ToShortDateString() </p>
+                <p class="small">Type of hazard : @blogPost.Category.Name</p>
+                <p class="small">Location : @blogPost.Location</p>
+                <p class="small">by @blogPost.Author.Name</p>
                 <a asp-controller="BlogPost" asp-action="Details" asp-route-id="@blogPost.Id" class="btn btn-primary">Details</a>
             </div>
         </div>

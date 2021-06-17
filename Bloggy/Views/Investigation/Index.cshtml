@@ -1,0 +1,23 @@
+﻿@model Bloggy.ViewModels.InvestigationListViewModel
+
+@{
+    ViewData["Title"] = "Investigations";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h2>Showing @Model.TotalEntries Investigations entries</h2>
+
+<div class="row">
+    @foreach (var investigation in Model.Investigations)
+    {
+        <div class="card" style="width: 18rem;padding:20px; margin:20px;">
+            <img class="card-img-top" src="@investigation.BlogPost.ImageUrl" alt="Image for @investigation.BlogPost.Title" />
+            <div class="card-body">
+                <h3 class="card-title">@investigation.BlogPost.Title</h3>
+                <p class="small">@investigation.DateOfAction.ToShortDateString() Status : @investigation.BlogPost.Status.Name by @investigation.Author.Name</p>
+                <a asp-controller="Investigation" asp-action="Details" asp-route-id="@investigation.Id" class="btn btn-primary">Details</a>
+            </div>
+        </div>
+    }
+</div>

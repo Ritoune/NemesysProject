@@ -67,7 +67,14 @@ namespace Bloggy.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+
                     b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("SpottedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");

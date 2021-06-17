@@ -1,0 +1,24 @@
+﻿@model Bloggy.ViewModels.HallOfFameListViewModel
+
+@{
+    ViewData["Title"] = "Hall Of Fame ";
+}
+
+<center>
+<h1>@ViewData["Title"]</h1>
+</center>
+
+<table border="1"  cellpadding="15"  align="center">
+    <tr>
+        <th>Reporter</th>
+        <th>Number Of Reports</th>
+    </tr>
+    @foreach (var fame in Model.HallOfFames)
+    {
+        <tr>
+            <td>@fame.Author.Name</td>
+            <td>@fame.NumberOfReports</td>
+        </tr>
+    }
+</table>
+

@@ -70,19 +70,54 @@ namespace Bloggy.Models
                 (
                     new Category()
                     {
-                        Name = "Uncategorised"
+                        Name = "Unsafe act"
                     },
                     new Category ()
                     {
-                        Name = "Comedy"
+                        Name = "Condition"
                     },
                     new Category()
                     {
-                        Name = "News"
+                        Name = "Equipment"
+                    },
+                    new Category()
+                    {
+                        Name = "Structure"
+                    },
+                    new Category()
+                    {
+                        Name = "Other"
                     }
                 );
                 context.SaveChanges();
             }
+
+            if (!context.Status.Any())
+            {
+                context.AddRange
+                (
+                    new Status()
+                    {
+                        Name = "Opened"
+                    },
+                    new Status()
+                    {
+                        Name = "Closed"
+                    },
+                    new Status()
+                    {
+                        Name = "Being investigating"
+                    },
+                    new Status()
+                    {
+                        Name = "No action required"
+                    }
+                   
+                );
+                context.SaveChanges();
+            }
+
+
 
             if (!context.BlogPosts.Any())
             {
@@ -93,35 +128,91 @@ namespace Bloggy.Models
                 (
                     new BlogPost()
                     {
-                        Title = "AGA Today",
-                        Content = "Today's AGA is characterized by a series of discussions and debates around ...",
+                        Title = "Dangerous act",
+                        Content = "A man is risking his life ",
                         CreatedDate = DateTime.UtcNow,
                         UpdatedDate = DateTime.UtcNow,
-                        ImageUrl = "/images/seed1.jpg",
+                        SpottedDate = DateTime.UtcNow,
+                        ImageUrl = "/images/UnsafeAct3.jpg",
                         CategoryId = 1,
-                        UserId = user.Id
+                        StatusId = 6,
+                        UserId = user.Id,
+                        Location = "In the parking",
+                        HasInvestigation = false
                     },
                     new BlogPost()
                     {
-                        Title = "Traffic is incredible",
-                        Content = "Today's traffic can't be described using words. Only an image can do that ...",
+                        Title = "The ladder will break ",
+                        Content = "Horror scene",
                         CreatedDate = DateTime.UtcNow.AddDays(-1),
                         UpdatedDate = DateTime.UtcNow.AddDays(-1),
-                        ImageUrl = "/images/seed2.jpg",
-                        CategoryId = 2,
-                        UserId = user.Id
+                        SpottedDate = DateTime.UtcNow.AddDays(-1),
+                        ImageUrl = "/images/UnsafeAct2.jpg",
+                        CategoryId = 1,
+                        StatusId = 6,
+                        UserId = user.Id,
+                        Location = "At the entrance",
+                        HasInvestigation = false
                     },
                     new BlogPost()
                     {
-                        Title = "When is Spring really starting?",
-                        Content = "Clouds clouds all around us. I thought spring started already, but ...",
+                        Title = "When will he stop it ?",
+                        Content = "A man in a dangerous position",
                         CreatedDate = DateTime.UtcNow.AddDays(-2),
                         UpdatedDate = DateTime.UtcNow.AddDays(-2),
-                        ImageUrl = "/images/seed3.jpg",
+                        SpottedDate = DateTime.UtcNow.AddDays(-2),
+                        ImageUrl = "/images/UnsafeAct1.jpg",
+                        CategoryId = 1,
+                        StatusId = 6,
+                        UserId = user.Id,
+                        Location = "In the library",
+                        HasInvestigation = false
+                    },
+                    new BlogPost()
+                    {
+                        Title = "Failed fire extinguisher",
+                        Content = "The fire protection system does not work ",
+                        CreatedDate = DateTime.UtcNow.AddDays(-2),
+                        UpdatedDate = DateTime.UtcNow.AddDays(-2),
+                        SpottedDate = DateTime.UtcNow.AddDays(-2),
+                        ImageUrl = "/images/Condition1.jpg",
                         CategoryId = 2,
-                        UserId = user.Id
+                        StatusId = 6,
+                        UserId = user.Id,
+                        Location = "In the stadium",
+                        HasInvestigation = false
+                    },
+                    new BlogPost()
+                    {
+                        Title = "Computer broken",
+                        Content = "This computer does not work",
+                        CreatedDate = DateTime.UtcNow.AddDays(-2),
+                        UpdatedDate = DateTime.UtcNow.AddDays(-2),
+                        SpottedDate = DateTime.UtcNow.AddDays(-2),
+                        ImageUrl = "/images/Equipment1.jpg",
+                        CategoryId = 3,
+                        StatusId = 6,
+                        UserId = user.Id,
+                        Location = "Classroom 404",
+                        HasInvestigation = false
+                    },
+                    new BlogPost()
+                    {
+                        Title = "Dangerous building",
+                        Content = "Please, repair this building",
+                        CreatedDate = DateTime.UtcNow.AddDays(-2),
+                        UpdatedDate = DateTime.UtcNow.AddDays(-2),
+                        SpottedDate = DateTime.UtcNow.AddDays(-2),
+                        ImageUrl = "/images/Structure 2.jpg",
+                        CategoryId = 4,
+                        StatusId = 6,
+                        UserId = user.Id,
+                        Location = "In the stadium",
+                        HasInvestigation = false
                     }
-                );
+
+
+                ); 
                 context.SaveChanges();
             }
         }
