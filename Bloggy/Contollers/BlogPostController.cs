@@ -207,7 +207,7 @@ namespace Bloggy.Contollers
                         SpottedDate = DateTime.UtcNow,
                         ImageUrl = "/images/blogposts/" + fileName,
                         ReadCount = 0,
-                        StatusId = 6,
+                        StatusId = 1,
                         CategoryId = newBlogPost.CategoryId,
                         Location = newBlogPost.Location,
                         UserId = _userManager.GetUserId(User),
